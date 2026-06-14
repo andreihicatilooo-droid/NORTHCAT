@@ -1,0 +1,3 @@
+northcat.top {
+    reverse_proxy web:80
+}

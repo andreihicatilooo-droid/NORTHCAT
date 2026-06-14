@@ -1,0 +1,24 @@
+# ---- NORTHCAT: статический сайт (nginx) ----
+FROM nginx:1.27-alpine
+
+# Конфиг сервера
+COPY docker/nginx.conf /etc/nginx/conf.d/default.conf
+
+# Статика сайта. Копируем весь проект, кроме исключённого в .dockerignore
+COPY . /usr/share/nginx/html
+
+# Внутри образа не нужны исходники бота и докер-файлы — удаляем
+RUN rm -rf /usr/share/nginx/html/bot \
+           /usr/share/nginx/html/docker \
+           /usr/share/nginx/html/Dockerfile.* \
+           /usr/share/nginx/html/docker-compose.yml \
+           /usr/share/nginx/html/deploy.* \
+           /usr/share/nginx/html/.dockerignore \
+           /usr/share/nginx/html/.git || true
+
+EXPOSE 80
+
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s \
+    CMD wget -qO- http://localhost/ >/dev/null 2>&1 || exit 1
+
+CMD ["nginx", "-g", "daemon off;"]

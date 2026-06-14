@@ -1,0 +1,155 @@
+/* ===================================================================
+   NORTHCAT NFT — style.css
+   =================================================================== */
+:root {
+    --bg: #07080a;
+    --bg2: #0b0d10;
+    --card: #111419;
+    --card2: #161a20;
+    --pink: #ff3b77;
+    --purple: #9d26cd;
+    --text: #f4f4f7;
+    --muted: #8c8b96;
+    --dim: #5a5963;
+    --border: rgba(255, 255, 255, 0.07);
+    --gold: #e0b53b;
+    --green: #3ad29f;
+    --blue: #229ed9;
+    --font-d: 'Pirata One', 'Grenze Gotisch', 'Cinzel', serif;
+    --font-b: 'Montserrat', system-ui, sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+    background:
+        radial-gradient(circle at 12% 8%, rgba(157,38,205,.12), transparent 42%),
+        radial-gradient(circle at 88% 92%, rgba(255,59,119,.10), transparent 44%),
+        var(--bg);
+    color: var(--text);
+    font-family: var(--font-b);
+    line-height: 1.6;
+    min-height: 100vh;
+}
+a { color: inherit; }
+h1, h2, h3 { font-family: var(--font-d); letter-spacing: 1px; font-weight: 700; }
+
+/* ---- Шапка ---- */
+header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 30px; border-bottom: 1px solid var(--border);
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(7,8,10,.82); backdrop-filter: blur(12px);
+}
+.brand { font-family: var(--font-d); font-size: 1.7rem; letter-spacing: 1.5px; }
+.brand span { color: var(--pink); }
+.brand small { display: block; font-family: var(--font-b); font-size: .62rem; letter-spacing: 3px; color: var(--muted); text-transform: uppercase; }
+.back-link { font-size: .82rem; color: var(--muted); text-decoration: none; transition: color .2s; }
+.back-link:hover { color: var(--pink); }
+
+/* ---- Лейаут ---- */
+.wrap { max-width: 1240px; margin: 0 auto; padding: 30px; }
+.hero {
+    text-align: center; margin-bottom: 34px;
+}
+.hero h1 { font-size: clamp(2rem, 5vw, 3.4rem); margin-bottom: 8px; }
+.hero h1 em { color: var(--pink); font-style: normal; }
+.hero p { color: var(--muted); max-width: 640px; margin: 0 auto; }
+.stats { display: flex; gap: 26px; justify-content: center; margin-top: 20px; flex-wrap: wrap; }
+.stat { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 14px 22px; min-width: 150px; }
+.stat .num { font-family: var(--font-d); font-size: 1.7rem; color: var(--pink); }
+.stat .lbl { font-size: .68rem; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); }
+
+.studio {
+    display: grid; grid-template-columns: 1fr 360px; gap: 28px; align-items: start;
+    margin-bottom: 46px;
+}
+@media (max-width: 900px) { .studio { grid-template-columns: 1fr; } }
+
+.stage {
+    background: linear-gradient(160deg, var(--card), var(--card2));
+    border: 1px solid var(--border); border-radius: 20px; padding: 22px;
+    display: flex; flex-direction: column; align-items: center;
+}
+.canvas-frame {
+    position: relative; width: 100%; max-width: 520px; aspect-ratio: 1;
+    border-radius: 16px; overflow: hidden; border: 1px solid var(--border);
+    box-shadow: 0 18px 50px rgba(0,0,0,.5);
+}
+#catCanvas { width: 100%; height: 100%; display: block; image-rendering: auto; }
+.token-tag {
+    position: absolute; left: 14px; top: 14px;
+    background: rgba(7,8,10,.7); border: 1px solid var(--border);
+    padding: 5px 12px; border-radius: 30px; font-family: var(--font-d); font-size: 1rem; letter-spacing: 1px;
+    backdrop-filter: blur(6px);
+}
+.rarity-badge {
+    position: absolute; right: 14px; top: 14px;
+    padding: 5px 14px; border-radius: 30px; font-size: .72rem; font-weight: 700;
+    letter-spacing: 1px; text-transform: uppercase; backdrop-filter: blur(6px);
+    border: 1px solid var(--border);
+}
+.rarity-badge.common    { background: rgba(140,139,150,.2); color: #c8c8d0; }
+.rarity-badge.rare      { background: rgba(34,158,217,.2); color: #74cdf2; border-color: rgba(34,158,217,.5); }
+.rarity-badge.epic      { background: rgba(157,38,205,.22); color: #c98ff0; border-color: rgba(157,38,205,.5); }
+.rarity-badge.legendary { background: rgba(255,59,119,.22); color: #ff89aa; border-color: rgba(255,59,119,.5); }
+.rarity-badge.mythic    { background: rgba(224,181,59,.25); color: #ffd97a; border-color: rgba(224,181,59,.6); box-shadow: 0 0 18px rgba(224,181,59,.4); }
+
+.controls { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-top: 22px; width: 100%; }
+.btn {
+    border: none; cursor: pointer; border-radius: 12px; padding: 13px 22px;
+    font-family: var(--font-b); font-size: .82rem; font-weight: 700; letter-spacing: .5px;
+    transition: transform .12s, filter .2s; color: #fff;
+}
+.btn:active { transform: scale(.96); }
+.btn-main { background: linear-gradient(135deg, var(--pink), var(--purple)); flex: 1 1 100%; padding: 16px; font-size: .95rem; }
+.btn-main:hover { filter: brightness(1.1); }
+.btn-ghost { background: var(--card2); border: 1px solid var(--border); color: var(--text); }
+.btn-ghost:hover { border-color: var(--pink); color: var(--pink); }
+.hint { font-size: .7rem; color: var(--dim); margin-top: 12px; text-align: center; }
+
+/* ---- Панель признаков ---- */
+.panel {
+    background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 22px;
+}
+.panel h3 { font-size: 1.3rem; margin-bottom: 4px; }
+.panel .sub { font-size: .72rem; color: var(--muted); margin-bottom: 16px; letter-spacing: 1px; text-transform: uppercase; }
+.trait-row {
+    display: grid; grid-template-columns: 1fr auto auto; gap: 10px; align-items: center;
+    padding: 10px 0; border-bottom: 1px solid var(--border); font-size: .86rem;
+}
+.trait-row:last-child { border-bottom: none; }
+.t-label { color: var(--muted); }
+.t-value { font-weight: 600; text-align: right; }
+.t-rar { font-size: .72rem; color: var(--gold); min-width: 48px; text-align: right; }
+
+.export-row { display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap; }
+.export-row .btn { flex: 1; padding: 11px; font-size: .74rem; }
+
+/* ---- Галерея ---- */
+.gallery-head {
+    display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; flex-wrap: wrap; gap: 14px;
+}
+.gallery-head h2 { font-size: 1.8rem; }
+.gallery-head .tools { display: flex; gap: 10px; align-items: center; }
+.gallery-head input {
+    width: 78px; background: var(--card2); border: 1px solid var(--border); color: var(--text);
+    border-radius: 10px; padding: 10px; font-family: var(--font-b); text-align: center;
+}
+.gallery-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 14px;
+}
+.g-cell {
+    background: var(--card); border: 1px solid var(--border); border-radius: 14px; overflow: hidden;
+    cursor: pointer; transition: transform .15s, border-color .2s, box-shadow .2s;
+}
+.g-cell:hover { transform: translateY(-4px); border-color: var(--pink); box-shadow: 0 12px 30px rgba(0,0,0,.5); }
+.g-cell canvas { width: 100%; display: block; }
+.g-cap { display: flex; align-items: center; justify-content: space-between; padding: 8px 12px; font-size: .76rem; color: var(--muted); }
+.g-cap .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+.dot.common { background: #8c8b96; }
+.dot.rare { background: var(--blue); }
+.dot.epic { background: var(--purple); }
+.dot.legendary { background: var(--pink); }
+.dot.mythic { background: var(--gold); box-shadow: 0 0 8px var(--gold); }
+
+footer { text-align: center; padding: 40px 20px; color: var(--dim); font-size: .78rem; border-top: 1px solid var(--border); margin-top: 40px; }
+footer a { color: var(--pink); text-decoration: none; }

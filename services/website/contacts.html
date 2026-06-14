@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Контакты — NORTHCAT | Тату-студия «Северный Кот»</title>
+    <meta name="description" content="Контакты тату-студии NORTHCAT: адрес, телефон, e-mail, Telegram @N0RTHCAT, часы работы и карта проезда.">
+    <meta name="theme-color" content="#07080a">
+    <link rel="icon" type="image/jpeg" href="cat_circle.jpg">
+    <link rel="apple-touch-icon" href="cat_circle.jpg">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pirata+One&family=Grenze+Gotisch:wght@400;500;600;700;800;900&family=Cinzel:wght@400;600;700&family=Montserrat:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- ===== Динамический WebGL-фон ===== -->
+    <canvas id="bgCanvas" aria-hidden="true"></canvas>
+
+    <!-- ===== Кастомный курсор ===== -->
+    <div class="cursor-dot" id="cursorDot"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
+
+    <!-- ===== Прогресс прокрутки ===== -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- ===== Шапка ===== -->
+    <header id="header" class="scrolled">
+        <div class="nav-container">
+            <a href="index.html" class="logo" data-cursor>
+                <svg class="logo-mark" viewBox="0 0 48 48" role="img" aria-label="NORTHCAT">
+                    <defs>
+                        <linearGradient id="ncLogo" x1="4" y1="2" x2="44" y2="46" gradientUnits="userSpaceOnUse">
+                            <stop stop-color="#ff6a98"/>
+                            <stop offset=".5" stop-color="#ff3b77"/>
+                            <stop offset="1" stop-color="#9d26cd"/>
+                        </linearGradient>
+                        <radialGradient id="ncEye" cx="0.5" cy="0.5" r="0.5">
+                            <stop stop-color="#fff7fb"/>
+                            <stop offset=".5" stop-color="#ff8fb0"/>
+                            <stop offset="1" stop-color="#ff3b77"/>
+                        </radialGradient>
+                    </defs>
+                    <circle cx="24" cy="24" r="22" fill="none" stroke="url(#ncLogo)" stroke-width="1.2" opacity=".5"/>
+                    <circle cx="24" cy="24" r="18.2" fill="none" stroke="url(#ncLogo)" stroke-width=".6" opacity=".3"/>
+                    <path d="M24 6.5 27 11M24 6.5 21 11M24 41.5 27 37M24 41.5 21 37M6.5 24 11 27M6.5 24 11 21M41.5 24 37 27M41.5 24 37 21" stroke="url(#ncLogo)" stroke-width="1" stroke-linecap="round" opacity=".55"/>
+                    <path d="M15 16.5 16.2 9.6Q16.4 8.6 17.2 9.2L23 13.8Q24 14.4 25 13.8L30.8 9.2Q31.6 8.6 31.8 9.6L33 16.5Q37.4 20.4 35.8 27Q34 34 24 36Q14 34 12.2 27Q10.6 20.4 15 16.5Z"
+                          fill="#0c0d12" stroke="url(#ncLogo)" stroke-width="1.6" stroke-linejoin="round"/>
+                    <path d="M18 16.2 19 11.6 22.4 14.4ZM30 16.2 29 11.6 25.6 14.4Z" fill="url(#ncLogo)" opacity=".7"/>
+                    <path d="M18.5 23.4Q20.4 20.8 22.6 23Q20.8 25.4 18.5 23.4Z" fill="url(#ncEye)"/>
+                    <path d="M29.5 23.4Q27.6 20.8 25.4 23Q27.2 25.4 29.5 23.4Z" fill="url(#ncEye)"/>
+                    <path d="M24 27.4 22.8 28.8 24 29.6 25.2 28.8Z" fill="url(#ncLogo)"/>
+                    <path d="M22.4 30 18 31.4M25.6 30 30 31.4M22.8 30.6 19 32.8M25.2 30.6 29 32.8" stroke="url(#ncLogo)" stroke-width=".7" stroke-linecap="round" opacity=".7"/>
+                </svg>
+                NORTH<span>CAT</span>
+            </a>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html#about" data-cursor>Студия</a></li>
+                    <li><a href="index.html#works" data-cursor>Работы</a></li>
+                    <li><a href="index.html#pricing" data-cursor>Цены</a></li>
+                    <li><a href="contacts.html" class="active" data-cursor>Контакты</a></li>
+                </ul>
+            </nav>
+            <div class="nav-actions">
+                <a href="index.html#booking" class="cta-btn" data-cursor>Записаться</a>
+                <button class="burger" id="burger" aria-label="Меню">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ===== Мобильное меню ===== -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="index.html#about" data-cursor>Студия</a>
+        <a href="index.html#works" data-cursor>Работы</a>
+        <a href="index.html#pricing" data-cursor>Цены</a>
+        <a href="contacts.html" data-cursor>Контакты</a>
+        <a href="index.html#booking" data-cursor>Запись</a>
+    </div>
+
+    <main>
+        <section id="contactsTop" style="padding-top:140px;">
+            <div class="section-container">
+                <div class="section-header reveal">
+                    <div class="section-eyebrow">Контакты</div>
+                    <h2 class="section-title">Как с нами связаться</h2>
+                    <p class="section-desc">Студия NORTHCAT — готическая и оккультная графика, блэкворк и авторские эскизы. Пишите в Telegram — отвечает живой мастер.</p>
+                </div>
+
+                <div class="map-layout reveal">
+                    <div class="map-info">
+                        <h3>Студия NORTHCAT</h3>
+                        <div class="map-detail">
+                            <span class="ico">📍</span>
+                            <div><h4>Адрес</h4><p id="cAddress"></p></div>
+                        </div>
+                        <div class="map-detail">
+                            <span class="ico">🕗</span>
+                            <div><h4>Часы работы</h4><p id="cHours"></p></div>
+                        </div>
+                        <div class="map-detail">
+                            <span class="ico">✆</span>
+                            <div><h4>Телефон</h4><p><a id="cPhone" href="#" style="color:var(--neon-pink);text-decoration:none;" data-cursor></a></p></div>
+                        </div>
+                        <div class="map-detail">
+                            <span class="ico">✉</span>
+                            <div><h4>E-mail</h4><p><a id="cEmail" href="#" style="color:var(--neon-pink);text-decoration:none;" data-cursor></a></p></div>
+                        </div>
+                        <div class="map-detail">
+                            <span class="ico">✈</span>
+                            <div><h4>Telegram</h4><p><a href="https://t.me/N0RTHCAT" target="_blank" style="color:var(--neon-pink);text-decoration:none;" data-cursor>@N0RTHCAT</a></p></div>
+                        </div>
+                        <div class="map-detail">
+                            <span class="ico">◎</span>
+                            <div><h4>Сайт</h4><p><a href="https://northcat.top" target="_blank" style="color:var(--neon-pink);text-decoration:none;" data-cursor>northcat.top</a></p></div>
+                        </div>
+
+                        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:14px;">
+                            <a href="https://t.me/N0RTHCAT" target="_blank" class="telegram-glow-btn" style="margin-top:0;" data-cursor>
+                                <svg class="telegram-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.11.02-1.89 1.2-5.33 3.52-.5.35-.96.52-1.37.51-.45-.01-1.32-.26-1.97-.47-.8-.26-1.43-.4-1.38-.85.03-.23.35-.47.96-.71 3.76-1.64 6.27-2.72 7.53-3.25 3.58-1.51 4.32-1.77 4.81-1.78.11 0 .35.03.5.16.13.11.17.26.18.38-.01.07.01.21 0 .28z"/></svg>
+                                Написать в Telegram
+                            </a>
+                            <a href="index.html#booking" class="btn-ghost" style="padding:13px 26px;" data-cursor>Записаться</a>
+                        </div>
+
+                        <p style="font-size:.8rem;color:var(--text-dim);margin-top:18px;">
+                            Ищем мастеров на <strong>неполный съём студии</strong> — есть свободные места.
+                            По аренде пишите в Telegram <a href="https://t.me/N0RTHCAT" target="_blank" style="color:var(--neon-pink);text-decoration:none;" data-cursor>@N0RTHCAT</a>.
+                        </p>
+                    </div>
+                    <div id="map"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== Подвал ===== -->
+        <footer id="footer">
+            <div class="footer-inner">
+                <div class="footer-col">
+                    <a href="index.html" class="logo" data-cursor>NORTH<span>CAT</span></a>
+                    <p>Тату-студия «Северный Кот». Готическая графика и авторские эскизы.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Навигация</h4>
+                    <a href="index.html#works" data-cursor>Работы</a>
+                    <a href="index.html#pricing" data-cursor>Цены</a>
+                    <a href="contacts.html" data-cursor>Контакты</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Контакты</h4>
+                    <p id="footAddress"></p>
+                    <p id="footPhone"></p>
+                    <a href="https://t.me/N0RTHCAT" target="_blank" data-cursor>@N0RTHCAT</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <span>© <span id="year"></span> NORTHCAT · northcat.top</span>
+            </div>
+        </footer>
+    </main>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="js/data.js"></script>
+    <script src="js/bg-webgl.js"></script>
+    <script src="js/contacts.js"></script>
+</body>
+</html>

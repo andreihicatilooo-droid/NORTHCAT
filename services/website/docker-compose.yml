@@ -1,0 +1,53 @@
+# ===================================================================
+#  NORTHCAT — полное развёртывание в Docker
+#  Сервисы:
+#    web — статический сайт (nginx) + NFT-генератор + Mini App
+#    bot — Telegram бот-настройщик (aiogram)
+# ===================================================================
+services:
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.web
+    image: northcat-web:latest
+    container_name: northcat-web
+    restart: unless-stopped
+    expose:
+      - "80"
+
+  caddy:
+    image: caddy:latest
+    container_name: caddy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - web
+
+  bot:
+    build:
+      context: .
+      dockerfile: Dockerfile.bot
+    image: northcat-bot:latest
+    container_name: northcat-bot
+    restart: unless-stopped
+    env_file:
+      - ./bot/.env
+    environment:
+      - DATA_DIR=/app/data
+    # Сохраняем settings.json настройщика между перезапусками
+    volumes:
+      - bot-data:/app/data
+    depends_on:
+      - web
+
+volumes:
+  bot-data:
+  caddy_data:
+  caddy_config:

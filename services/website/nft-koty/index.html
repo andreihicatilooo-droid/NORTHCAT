@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NORTHCAT NFT — Генератор котов</title>
+    <meta name="description" content="Процедурный генератор NFT-котов NORTHCAT: миллионы случайных комбинаций, редкость, экспорт PNG и метаданных.">
+    <meta name="theme-color" content="#07080a">
+    <link rel="icon" type="image/jpeg" href="../cat_circle.jpg">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pirata+One&family=Grenze+Gotisch:wght@400;500;600;700;800;900&family=Cinzel:wght@400;600;700&family=Montserrat:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <div class="brand">NORTH<span>CAT</span><small>NFT Cat Generator</small></div>
+        <a href="../index.html" class="back-link">← На сайт студии</a>
+    </header>
+
+    <div class="wrap">
+
+        <section class="hero">
+            <h1>Генератор <em>NFT-котов</em></h1>
+            <p>Каждый кот собирается случайно из десятков признаков: окрас, узор, глаза, уборы, очки, аксессуары и аура. Жми «Сгенерировать» (или пробел).</p>
+            <div class="stats">
+                <div class="stat"><div class="num" id="comboCount">—</div><div class="lbl">Комбинаций</div></div>
+                <div class="stat"><div class="num" id="traitCats">—</div><div class="lbl">Категорий</div></div>
+                <div class="stat"><div class="num">∞</div><div class="lbl">Сидов</div></div>
+            </div>
+        </section>
+
+        <section class="studio">
+            <div class="stage">
+                <div class="canvas-frame">
+                    <canvas id="catCanvas" width="1000" height="1000"></canvas>
+                    <div class="token-tag" id="tokenLabel">#0001</div>
+                    <div class="rarity-badge common" id="rarityBadge">—</div>
+                </div>
+                <div class="controls">
+                    <button class="btn btn-main" id="btnGenerate">✦ Сгенерировать кота</button>
+                    <button class="btn btn-ghost" id="btnDownload">PNG 1000×</button>
+                    <button class="btn btn-ghost" id="btnDownload2x">PNG 2000×</button>
+                    <button class="btn btn-ghost" id="btnJson">Метаданные JSON</button>
+                </div>
+                <p class="hint">Пробел — новый кот · Клик по карточке в галерее открывает кота крупно</p>
+            </div>
+
+            <aside class="panel">
+                <h3>Признаки</h3>
+                <div class="sub">Trait sheet · % — частота появления</div>
+                <div id="traitList"></div>
+                <div class="export-row">
+                    <button class="btn btn-ghost" id="btnGalleryMini" onclick="document.getElementById('btnGenerate').click()">Ещё кот</button>
+                </div>
+            </aside>
+        </section>
+
+        <section>
+            <div class="gallery-head">
+                <h2>Коллекция</h2>
+                <div class="tools">
+                    <input type="number" id="gallerySize" value="12" min="1" max="120" aria-label="Количество">
+                    <button class="btn btn-ghost" id="btnGallery">Сгенерировать <span id="galleryCount">12</span> шт.</button>
+                </div>
+            </div>
+            <div class="gallery-grid" id="galleryGrid"></div>
+        </section>
+
+    </div>
+
+    <footer>
+        NORTHCAT NFT · процедурная генерация на чистом canvas · <a href="../index.html">northcat.top</a>
+    </footer>
+
+    <script src="traits.js"></script>
+    <script src="cat-render.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
