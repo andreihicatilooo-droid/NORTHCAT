@@ -3,9 +3,53 @@
 Начальный список задач, распределенный по 6 направлениям проекта.
 Используй этот файл как основу для Todoist и как место для записи новых идей.
 
+> **Аудит 14.06.2026:** предложения и задачи — `docs/project/PROPOSALS.md` · Реестр — `docs/project/INDEX.md`
+
+---
+
+## 🔴 Недочёты по направлениям (аудит 14.06.2026)
+
+### P0 — критично
+
+| Направление | Недочёт | ID |
+|-------------|---------|-----|
+| 🏗️ Infrastructure | docker-compose в `website/` не видит `tg-bot/` | BUG-001, TASK-011 |
+| 🌐 Website + 🤖 Bot | Нет ключей, TON, реального контента, HTTPS | TASK-012 |
+| 📋 Documentation | README/CLAUDE описывают Next.js, факт — static HTML | DEBT-001, TASK-013 |
+
+### P1 — важно
+
+| Направление | Недочёт | ID |
+|-------------|---------|-----|
+| 🎨 Дизайн | Нет `docs/VISUAL_IDENTITY.md`, `resources/` пуст | GAP-003 |
+| 💼 Salon API | Только README, нет кода | GAP-001 |
+| 💼 Database | Нет миграций и schema | GAP-002 |
+| 🌐 Website | Заявки в localStorage, админка с клиентским паролем | DEBT-003, DEBT-004 |
+| 🏗️ Infrastructure | CI без build/test, нет root compose | DEBT-002, GAP-004 |
+
+### P2 — отложить
+
+| Направление | Недочёт |
+|-------------|---------|
+| 🌐 Website | Дубликаты медиа в `ресурсы/` (~8.5 МБ) |
+| 🌐 Website | Кириллица в Pirata One → fallback |
+| 📋 Documentation | Architecture diagram |
+
 ---
 
 ## 🎨 ДИЗАЙН & БРЕНДИНГ (Design Direction)
+
+> **Аудит 14.06:** Canva в работе, `resources/design/` — каркас без файлов, `VISUAL_IDENTITY.md` отсутствует (GAP-003).
+
+### Недочёты design
+
+**P0** (дедлайн 25.06)
+- [ ] Создать `docs/VISUAL_IDENTITY.md` — GAP-003
+- [ ] Экспортировать ассеты из Canva → `resources/design/brand-assets/`
+
+**P1**
+- [ ] Перенести медиа из `services/website/` в `resources/` (единый источник)
+- [ ] Убрать дубликаты в `services/website/ресурсы/`
 
 ### Essential Tasks (до 25.06.2026)
 
@@ -36,33 +80,53 @@
 
 ## 🌐 WEBSITE (northcat.top)
 
-### Phase 1: Landing Page & Structure
+> **Статус аудита 14.06:** production static HTML ~90% готов (`services/website/`).
+> Next.js из плана ниже — **отложен** (см. DEBT-001). Актуальные недочёты: TASK-012, DEBT-003, DEBT-004.
+
+### Phase 1: Landing Page & Structure ✅ (выполнено — static MVP)
 
 **2.1 Frontend Setup**
-- [ ] Инициализировать Next.js/React проект в `services/website/`
-- [ ] Настроить Tailwind CSS или аналог
-- [ ] Установить необходимые зависимости (image optimization, routing)
-- [ ] Создать базовую структуру папок (components, pages, styles, utils)
+- [x] ~~Инициализировать Next.js/React~~ → **static HTML/CSS/JS** (импорт production)
+- [x] Базовая структура: `index.html`, `css/`, `js/`, `nft-koty/`
+- [ ] _(P2)_ Решить: оставить static или мигрировать на Next.js
 
-**2.2 Landing Page**
-- [ ] Создать hero section с логотипом NORTHCAT
-- [ ] Добавить short intro/elevator pitch
-- [ ] Создать gallery preview (showcase tattoo designs)
-- [ ] Добавить CTA (Book, Contact, Learn More)
+**2.2 Landing Page** ✅
+- [x] Hero section с логотипом NORTHCAT
+- [x] Gallery preview (альбом работ + скетчи)
+- [x] CTA (запись, Telegram, NFT, Mini App)
 
-**2.3 Navigation & Layout**
-- [ ] Создать responsive navbar/header
-- [ ] Добавить footer с контактами и ссылками
-- [ ] Настроить mobile-friendly design
-- [ ] Добавить социальные ссылки (Instagram, TG, etc.)
+**2.3 Navigation & Layout** ✅
+- [x] Responsive navbar/header
+- [x] Footer с контактами и ссылками
+- [x] Mobile-friendly design
 
-**2.4 Pages Structure**
-- [ ] `/` - Landing/Home
-- [ ] `/portfolio` - Gallery of tattoos
-- [ ] `/about` - About the studio
-- [ ] `/services` - Services & pricing
-- [ ] `/booking` - Booking system
-- [ ] `/contact` - Contact form
+**2.4 Pages Structure** (частично — одностраничник + отдельные страницы)
+- [x] `/` — Landing/Home (`index.html`)
+- [x] Галерея работ — секция на главной
+- [x] Услуги и цены — секции на главной
+- [x] `/contacts.html` — контакты
+- [x] `/miniapp.html` — Telegram Web3 Mini App
+- [x] `/nft-koty/` — NFT-генератор
+- [x] `/admin.html` — демо-админка (DEBT-004)
+- [ ] `/portfolio`, `/about`, `/booking` как отдельные страницы — не нужны в static MVP
+
+### Недочёты website (P0–P2)
+
+**P0**
+- [ ] Реальные фото работ/скетчей вместо демо (`js/data.js`) — TASK-012
+- [ ] Реальные контакты в `STUDIO` (`js/data.js`) — TASK-012
+- [ ] `STUDIO_TON_ADDRESS` в `miniapp.html` — TASK-012
+
+**P1**
+- [ ] Backend для заявок вместо localStorage — DEBT-003
+- [ ] Серверная защита `admin.html` — DEBT-004
+- [ ] Удалить артефакт `package-lock.json` без `package.json`
+
+**P2**
+- [ ] Очистить дубликаты в `ресурсы/` (~8.5 МБ неиспользуемых видео)
+- [ ] Кириллица в заголовках — fallback шрифт (ограничение Pirata One)
+
+### Phase 1 (устаревший план Next.js — архив)
 
 ### Phase 2: Backend & Integration
 
@@ -85,6 +149,16 @@
 ---
 
 ## 💼 SALON MANAGEMENT (Infrastructure Direction)
+
+> **Статус аудита 14.06:** `services/salon-api/` — только README (GAP-001).
+> `database/migrations/` — заглушка (GAP-002).
+
+### Недочёты salon-api & database
+
+**P1**
+- [ ] Создать минимальный проект в `services/salon-api/` (package.json, src/) — GAP-001
+- [ ] Первая SQL-миграция в `database/migrations/` — GAP-002
+- [ ] Endpoint `POST /api/appointments` для заявок с сайта/бота — DEBT-003
 
 ### Phase 1: Core API
 
@@ -125,21 +199,41 @@
 
 ## 🤖 TELEGRAM BOT (Automation Direction)
 
-### Phase 1: MVP Commands
+> **Статус аудита 14.06:** Python aiogram 3 готов в `services/tg-bot/`.
+> Нужны ключи и фикс Docker paths (BUG-001).
+
+### Недочёты tg-bot
+
+**P0**
+- [ ] Заполнить `.env`: `BOT_TOKEN`, `OPERATOR_CHAT_ID` — TASK-012
+- [ ] Починить путь в `website/docker-compose.yml` → `tg-bot/` — BUG-001
+
+**P1**
+- [ ] Сохранение заявок в БД (сейчас только Telegram + пересылка) — DEBT-003
+- [ ] Claude AI / MCP интеграция — запланировано на август
+
+### Phase 1: MVP Commands ✅ (базовый функционал готов)
 
 **4.1 Bot Setup**
-- [ ] Инициализировать TG-bot проект в `services/tg-bot/`
-- [ ] Выбрать framework (node-telegram-bot-api, telegraf, pyTelegramBotAPI)
-- [ ] Зарегистрировать бота в BotFather
-- [ ] Настроить webhook/polling
+- [x] Проект в `services/tg-bot/` — Python aiogram 3
+- [x] Dockerfile.bot
+- [ ] Зарегистрировать/проверить бота в BotFather — TASK-012
+- [x] Polling (в `bot.py`)
 
 **4.2 Basic Commands**
-- [ ] `/start` - приветствие и главное меню
-- [ ] `/help` - список команд
-- [ ] `/portfolio` - показать работы
-- [ ] `/book` - начать процесс записи
-- [ ] `/contact` - контактная информация
-- [ ] `/price` - цены на услуги
+- [x] `/start` — приветствие и главное меню
+- [x] `/menu` — меню
+- [x] `/setup` — настройщик для оператора
+- [ ] `/help` — отдельная команда (есть в меню)
+- [ ] `/portfolio` — показать работы (есть ссылка на сайт)
+- [x] Запись — через Mini App и текстовые заявки
+- [x] Контакты и цены — в меню
+
+### Phase 1 (устаревший план Node.js — архив)
+
+**4.1 Bot Setup (архив)**
+- [ ] ~~Инициализировать TG-bot проект~~ → готово (Python)
+- [ ] ~~Выбрать framework (telegraf)~~ → aiogram 3
 
 **4.3 Booking Flow**
 - [ ] Создать inline keyboard для выбора услуги
@@ -188,13 +282,30 @@
 
 ## 🏗️ INFRASTRUCTURE (DevOps Direction)
 
-### Phase 1: Containerization
+> **Статус аудита 14.06:** Docker есть в `services/website/`, но путь к боту сломан (BUG-001).
+> CI минимальный (DEBT-002). Production на GCP `northcat-server`.
+
+### Недочёты infrastructure
+
+**P0**
+- [ ] Исправить docker-compose paths web ↔ tg-bot — BUG-001, TASK-011
+
+**P1**
+- [ ] Root `docker-compose.yml` для monorepo — GAP-004
+- [ ] CI: build Docker images, smoke-test nginx — DEBT-002
+- [ ] Синхронизировать README (команды запуска) — TASK-013
+
+**P2**
+- [ ] Architecture diagram
+- [ ] Kubernetes manifests
+
+### Phase 1: Containerization (частично готово)
 
 **5.1 Docker Setup**
-- [ ] Создать Dockerfile для каждого сервиса (website, api, bot)
-- [ ] Написать docker-compose.yml для local development
-- [ ] Настроить volumes для development
-- [ ] Добавить .dockerignore для оптимизации
+- [x] Dockerfile.web (nginx + static)
+- [x] Dockerfile.bot (Python) — в `services/tg-bot/`
+- [x] docker-compose.yml — в `services/website/` (**нужен фикс путей**)
+- [x] .dockerignore
 
 **5.2 Services Configuration**
 - [ ] Создать environment configs для разных stages

@@ -1,0 +1,18 @@
+# Системное / редакторское
+.git
+.gitignore
+.vscode
+*.code-search
+
+# Docker-артефакты (не нужны внутри образов)
+.dockerignore
+
+# Секреты и локальные данные бота
+bot/.env
+bot/data
+bot/__pycache__
+**/__pycache__
+*.pyc
+
+# Тяжёлое и необязательное для образа
+*.md

@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NORTHCAT — Тату-студия «Северный Кот» | northcat.top</title>
+    <meta name="description" content="NORTHCAT — тату-студия «Северный Кот». Готическая и оккультная графика, блэкворк, авторские эскизы. Запись, цены, карта.">
+    <meta name="theme-color" content="#07080a">
+    <link rel="canonical" href="https://northcat.top/">
+    <link rel="icon" type="image/jpeg" href="cat_circle.jpg">
+    <link rel="apple-touch-icon" href="cat_circle.jpg">
+
+    <!-- Open Graph / Twitter -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="NORTHCAT — Тату-студия «Северный Кот»">
+    <meta property="og:description" content="Готическая и оккультная графика, блэкворк, авторские эскизы. Запись, цены, карта.">
+    <meta property="og:image" content="https://northcat.top/cat_full.jpg">
+    <meta property="og:url" content="https://northcat.top/">
+    <meta property="og:site_name" content="NORTHCAT">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pirata+One&family=Grenze+Gotisch:wght@400;500;600;700;800;900&family=Cinzel:wght@400;600;700&family=Montserrat:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Leaflet (карта) -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- ===== Динамический WebGL-фон ===== -->
+    <canvas id="bgCanvas" aria-hidden="true"></canvas>
+
+    <!-- ===== Кастомный курсор ===== -->
+    <div class="cursor-dot" id="cursorDot"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
+
+    <!-- ===== Прелоадер ===== -->
+    <div id="preloader">
+        <div class="preloader-sigil"></div>
+        <div class="preloader-text">NORTHCAT</div>
+        <div class="preloader-sub">Void Crafted</div>
+    </div>
+
+    <!-- ===== Прогресс прокрутки ===== -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- ===== Шапка ===== -->
+    <header id="header">
+        <div class="nav-container">
+            <a href="#hero" class="logo" data-cursor>
+                <svg class="logo-mark" viewBox="0 0 48 48" role="img" aria-label="NORTHCAT">
+                    <defs>
+                        <linearGradient id="ncLogo" x1="4" y1="2" x2="44" y2="46" gradientUnits="userSpaceOnUse">
+                            <stop stop-color="#ff6a98"/>
+                            <stop offset=".5" stop-color="#ff3b77"/>
+                            <stop offset="1" stop-color="#9d26cd"/>
+                        </linearGradient>
+                        <radialGradient id="ncEye" cx="0.5" cy="0.5" r="0.5">
+                            <stop stop-color="#fff7fb"/>
+                            <stop offset=".5" stop-color="#ff8fb0"/>
+                            <stop offset="1" stop-color="#ff3b77"/>
+                        </radialGradient>
+                    </defs>
+                    <circle cx="24" cy="24" r="22" fill="none" stroke="url(#ncLogo)" stroke-width="1.2" opacity=".5"/>
+                    <circle cx="24" cy="24" r="18.2" fill="none" stroke="url(#ncLogo)" stroke-width=".6" opacity=".3"/>
+                    <path d="M24 6.5 27 11M24 6.5 21 11M24 41.5 27 37M24 41.5 21 37M6.5 24 11 27M6.5 24 11 21M41.5 24 37 27M41.5 24 37 21" stroke="url(#ncLogo)" stroke-width="1" stroke-linecap="round" opacity=".55"/>
+                    <path d="M15 16.5 16.2 9.6Q16.4 8.6 17.2 9.2L23 13.8Q24 14.4 25 13.8L30.8 9.2Q31.6 8.6 31.8 9.6L33 16.5Q37.4 20.4 35.8 27Q34 34 24 36Q14 34 12.2 27Q10.6 20.4 15 16.5Z"
+                          fill="#0c0d12" stroke="url(#ncLogo)" stroke-width="1.6" stroke-linejoin="round"/>
+                    <path d="M18 16.2 19 11.6 22.4 14.4ZM30 16.2 29 11.6 25.6 14.4Z" fill="url(#ncLogo)" opacity=".7"/>
+                    <path d="M18.5 23.4Q20.4 20.8 22.6 23Q20.8 25.4 18.5 23.4Z" fill="url(#ncEye)"/>
+                    <path d="M29.5 23.4Q27.6 20.8 25.4 23Q27.2 25.4 29.5 23.4Z" fill="url(#ncEye)"/>
+                    <path d="M24 27.4 22.8 28.8 24 29.6 25.2 28.8Z" fill="url(#ncLogo)"/>
+                    <path d="M22.4 30 18 31.4M25.6 30 30 31.4M22.8 30.6 19 32.8M25.2 30.6 29 32.8" stroke="url(#ncLogo)" stroke-width=".7" stroke-linecap="round" opacity=".7"/>
+                </svg>
+                NORTH<span>CAT</span>
+            </a>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="#about" data-cursor>Студия</a></li>
+                    <li><a href="#works" data-cursor>Работы</a></li>
+                    <li><a href="#sketches" data-cursor>Скетчи</a></li>
+                    <li><a href="#pricing" data-cursor>Цены</a></li>
+                    <li><a href="#news" data-cursor>Новости</a></li>
+                    <li><a href="nft-koty/index.html" data-cursor>NFT-коты</a></li>
+                    <li><a href="contacts.html" data-cursor>Контакты</a></li>
+                </ul>
+            </nav>
+            <div class="nav-actions">
+                <a href="#booking" class="cta-btn" data-cursor>Записаться</a>
+                <button class="burger" id="burger" aria-label="Меню">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ===== Мобильное меню ===== -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#about" data-cursor>Студия</a>
+        <a href="#works" data-cursor>Работы</a>
+        <a href="#sketches" data-cursor>Скетчи</a>
+        <a href="#pricing" data-cursor>Цены</a>
+        <a href="#news" data-cursor>Новости</a>
+        <a href="nft-koty/index.html" data-cursor>NFT-коты</a>
+        <a href="contacts.html" data-cursor>Контакты</a>
+        <a href="#booking" data-cursor>Запись</a>
+    </div>
+
+    <main>
+        <!-- ===== HERO ===== -->
+        <section class="hero" id="hero">
+            <video class="hero-video" autoplay loop muted playsinline poster="cat_circle.jpg">
+                <source src="promo.mp4" type="video/mp4">
+            </video>
+            <div class="hero-overlay"></div>
+            <div class="hero-sigil"></div>
+            <div class="hero-content">
+                <div class="hero-tagline">Concept Tattoo Studio</div>
+                <h1 class="hero-title">Северный <em>Кот</em></h1>
+                <p class="hero-desc">Мистическая тату-эстетика на стыке готики, сакральной геометрии и авторской графики. Твой персональный тотем во плоти.</p>
+                <div class="hero-actions">
+                    <a href="#works" class="btn-primary" data-cursor>Смотреть работы</a>
+                    <a href="#booking" class="btn-ghost" data-cursor>Записаться</a>
+                </div>
+            </div>
+            <div class="hero-scroll">
+                <div class="mouse"></div>
+                Scroll
+            </div>
+        </section>
+
+        <!-- ===== Бегущая строка ===== -->
+        <div class="marquee">
+            <div class="marquee-track" id="marquee">
+                <span>✶</span> Void Crafted &nbsp; <span>☩</span> Dark Urbanic &nbsp; <span>ᚱ</span> Eternal Creativity &nbsp; <span>✦</span> Ornamental Blackwork &nbsp; <span>⚝</span> Occult Graphic &nbsp;
+                <span>✶</span> Void Crafted &nbsp; <span>☩</span> Dark Urbanic &nbsp; <span>ᚱ</span> Eternal Creativity &nbsp; <span>✦</span> Ornamental Blackwork &nbsp; <span>⚝</span> Occult Graphic &nbsp;
+            </div>
+        </div>
+
+        <!-- ===== О СТУДИИ ===== -->
+        <section id="about">
+            <div class="section-container">
+                <div class="about-grid">
+                    <div class="about-text reveal">
+                        <div class="section-eyebrow">О студии</div>
+                        <h3>Оскверняя пустоту искусством</h3>
+                        <p>Тату-студия «Северный Кот» (NORTHCAT) — это портал в мир изящной тьмы и сакральной геометрии. Мы создаём не просто рисунки на коже, а глубокие символы, отражающие внутреннюю философию каждого гостя.</p>
+                        <p>Наш стиль базируется на сложной графике, орнаментале, блэкворке и оккультных деталях, сочетающих древние руны с современной цифровой каллиграфией.</p>
+                        <div class="about-highlights">
+                            <div class="highlight-item">
+                                <h4>Индивидуальный эскиз</h4>
+                                <p>Каждая работа уникальна и создаётся персонально под анатомию вашего тела.</p>
+                            </div>
+                            <div class="highlight-item">
+                                <h4>Безопасность</h4>
+                                <p>Только премиальное одноразовое оборудование и лучшие пигменты.</p>
+                            </div>
+                        </div>
+                        <div class="about-stats">
+                            <div><div class="stat-num" data-count="1200">0</div><div class="stat-label">Работ</div></div>
+                            <div><div class="stat-num" data-count="8">0</div><div class="stat-label">Мастеров</div></div>
+                            <div><div class="stat-num" data-count="6">0</div><div class="stat-label">Лет опыта</div></div>
+                        </div>
+                    </div>
+                    <div class="about-image reveal">
+                        <div class="mystic-frame">
+                            <img src="cat_circle.jpg" alt="Северный Кот — фирменный сигил">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== УСЛУГИ ===== -->
+        <section id="services" style="background:var(--bg-deep);">
+            <div class="section-container">
+                <div class="section-header reveal">
+                    <div class="section-eyebrow">Услуги дизайна</div>
+                    <h2 class="section-title">Что мы делаем</h2>
+                    <p class="section-desc">От авторского эскиза до финальной работы на коже — полный цикл в фирменной тёмной эстетике.</p>
+                </div>
+                <div class="services-grid" id="servicesGrid"></div>
+            </div>
+        </section>
+
+        <!-- ===== АЛЬБОМ РАБОТ ===== -->
+        <section id="works">
+            <div class="section-container">
+                <div class="section-header reveal">
+                    <div class="section-eyebrow">Альбом работ</div>
+                    <h2 class="section-title">Готовые работы</h2>
+                    <p class="section-desc">Подборка реализованных проектов в стиле NORTHCAT. Наведите, чтобы рассмотреть.</p>
+                </div>
+                <div class="filter-bar reveal" id="worksFilter"></div>
+                <div class="gallery-grid" id="worksGrid"></div>
+            </div>
+        </section>
+
+        <!-- ===== СКЕТЧИ ===== -->
+        <section id="sketches" style="background:var(--bg-deep);">
+            <div class="section-container">
+                <div class="section-header reveal">
+                    <div class="section-eyebrow">Коллекция эскизов</div>
+                    <h2 class="section-title">Скетчи и стили</h2>
+                    <p class="section-desc">Свободные эскизы, флэши и фирменная типографика. Выберите свой и запишитесь на сеанс.</p>
+                </div>
+                <div class="sketch-grid" id="sketchGrid"></div>
+            </div>
+        </section>
+
+        <!-- ===== КАТАЛОГ (в разработке) ===== -->
+        <section id="catalog">
+            <div class="section-container">
+                <div class="section-header reveal">
+                    <div class="section-eyebrow">Магазин студии</div>
+                    <h2 class="section-title">Каталог товаров</h2>
+                </div>
+                <div class="dev-block reveal">
+                    <div class="dev-sigil">⚒</div>
+                    <h3>Раздел в разработке</h3>
+                    <p>Скоро здесь появятся мерч, принты, уход за тату и подарочные сертификаты в эстетике «Северного Кота».</p>
+                    <p class="dev-sub">Следите за анонсами в нашем Telegram — там мы первыми объявим о запуске магазина.</p>
+                    <a href="https://t.me/N0RTHCAT" target="_blank" class="telegram-glow-btn" style="margin-top:8px;" data-cursor>
+                        <svg class="telegram-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.11.02-1.89 1.2-5.33 3.52-.5.35-.96.52-1.37.51-.45-.01-1.32-.26-1.97-.47-.8-.26-1.43-.4-1.38-.85.03-.23.35-.47.96-.71 3.76-1.64 6.27-2.72 7.53-3.25 3.58-1.51 4.32-1.77 4.81-1.78.11 0 .35.03.5.16.13.11.17.26.18.38-.01.07.01.21 0 .28z"/></svg>
+                        Узнать о запуске
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== НОВОСТИ ===== -->
+        <section id="news">
+            <div class="section-container">
+                <div class="section-header reveal">
+                    <div class="section-eyebrow">Лента</div>
+                    <h2 class="section-title">Новости студии</h2>
+                    <p class="section-desc">Анонсы, дропы эскизов и акции. Синхронизировано с нашим Telegram-каналом.</p>
+                </div>
+                <div class="news-grid" id="newsGrid"></div>
+                <div class="tg-feed-banner reveal">
+                    <div>
+                        <h3>Лента в Telegram</h3>
+                        <p>Все новости, флэши и свободные слоты публикуются первыми в канале <strong>@N0RTHCAT</strong>.</p>
+                    </div>
+                    <a href="https://t.me/N0RTHCAT" target="_blank" class="telegram-glow-btn" style="margin-top:0;" data-cursor>
+                        <svg class="telegram-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.11.02-1.89 1.2-5.33 3.52-.5.35-.96.52-1.37.51-.45-.01-1.32-.26-1.97-.47-.8-.26-1.43-.4-1.38-.85.03-.23.35-.47.96-.71 3.76-1.64 6.27-2.72 7.53-3.25 3.58-1.51 4.32-1.77 4.81-1.78.11 0 .35.03.5.16.13.11.17.26.18.38-.01.07.01.21 0 .28z"/></svg>
+                        Открыть канал
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== КАРТА / ЛОКАЦИЯ ===== -->
+        <section id="location" style="background:var(--bg-deep);">
+            <div class="section-container">
+                <div class="section-header reveal">
+                    <div class="section-eyebrow">Как нас найти</div>
+                    <h2 class="section-title">Локация на карте</h2>
+                </div>
+                <div class="map-layout reveal">
+                    <div class="map-info">
+                        <h3>Студия NORTHCAT</h3>
+                        <div class="map-detail">
+                            <span class="ico">📍</span>
+                            <div><h4>Адрес</h4><p id="infoAddress"></p></div>
+                        </div>
+                        <div class="map-detail">
+                            <span class="ico">🕗</span>
+                            <div><h4>Часы работы</h4><p id="infoHours"></p></div>
+                        </div>
+                        <div class="map-detail">
+                            <span class="ico">✆</span>
+                            <div><h4>Телефон</h4><p id="infoPhone"></p></div>
+                        </div>
+                        <div class="map-detail">
+                            <span class="ico">✈</span>
+                            <div><h4>Telegram</h4><p><a href="https://t.me/N0RTHCAT" target="_blank" style="color:var(--neon-pink);text-decoration:none;" data-cursor>@N0RTHCAT</a></p></div>
+                        </div>
+                        <a href="#booking" class="btn-primary" style="margin-top:10px;display:inline-block;" data-cursor>Записаться</a>
+                    </div>
+                    <div id="map"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== СТОИМОСТЬ ===== -->
+        <section id="pricing">
+            <div class="section-container">
+                <div class="section-header reveal">
+                    <div class="section-eyebrow">Прайс</div>
+                    <h2 class="section-title">Примерная стоимость тату</h2>
+                    <p class="section-desc">Финальная цена зависит от сложности, размера и расположения. Точную стоимость мастер назовёт после согласования эскиза.</p>
+                </div>
+                <div class="price-grid reveal" id="priceGrid"></div>
+                <p class="price-note reveal">Минимальный сеанс — от 3 000 ₽. Эскиз и консультация при записи — бесплатно. Действуют скидки на перекрытия и большие проекты.</p>
+            </div>
+        </section>
+
+        <!-- ===== ВАКАНСИИ / АРЕНДА ===== -->
+        <section id="hire" style="background:var(--bg-deep);">
+            <div class="section-container">
+                <div class="hire-banner reveal">
+                    <div class="hire-inner">
+                        <div>
+                            <div class="section-eyebrow">Аренда / Вакансии</div>
+                            <h2 class="section-title" style="text-align:left;">Ищем мастеров в студию</h2>
+                            <p class="section-desc" style="text-align:left;margin:0 0 18px;">
+                                Сдаём рабочее место на <strong>неполный съём студии</strong> — есть свободные места.
+                                Приглашаем тату-мастеров на частичную занятость: работайте в удобные дни, без аренды целого помещения.
+                            </p>
+                            <div class="hire-perks">
+                                <span>✶ Гибкий график</span>
+                                <span>☩ Оборудованное место</span>
+                                <span>ᚱ Поток клиентов</span>
+                                <span>✦ Лояльные условия</span>
+                            </div>
+                            <div class="hire-actions">
+                                <a href="https://t.me/N0RTHCAT" target="_blank" class="telegram-glow-btn" style="margin-top:0;" data-cursor>
+                                    <svg class="telegram-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.11.02-1.89 1.2-5.33 3.52-.5.35-.96.52-1.37.51-.45-.01-1.32-.26-1.97-.47-.8-.26-1.43-.4-1.38-.85.03-.23.35-.47.96-.71 3.76-1.64 6.27-2.72 7.53-3.25 3.58-1.51 4.32-1.77 4.81-1.78.11 0 .35.03.5.16.13.11.17.26.18.38-.01.07.01.21 0 .28z"/></svg>
+                                    Написать по аренде
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== ЗАПИСЬ ===== -->
+        <section id="booking">
+            <div class="section-container">
+                <div class="section-header reveal">
+                    <div class="section-eyebrow">Запись онлайн</div>
+                    <h2 class="section-title">Записаться на сеанс</h2>
+                </div>
+                <div class="booking-layout">
+                    <div class="booking-aside reveal">
+                        <h3>Как проходит запись</h3>
+                        <p>Оставьте заявку — мастер свяжется с вами в Telegram, обсудит эскиз, стоимость и подберёт удобное время.</p>
+                        <div class="booking-feature">
+                            <span class="ico">①</span>
+                            <div><h4>Заявка</h4><p>Заполните форму или напишите нам в Telegram.</p></div>
+                        </div>
+                        <div class="booking-feature">
+                            <span class="ico">②</span>
+                            <div><h4>Согласование</h4><p>Обсуждаем идею, эскиз и стоимость в Telegram.</p></div>
+                        </div>
+                        <div class="booking-feature">
+                            <span class="ico">③</span>
+                            <div><h4>Сеанс</h4><p>Приходите в студию — и забираете свой тотем.</p></div>
+                        </div>
+                        <div class="booking-contacts">
+                            <div class="bc-row">
+                                <span class="ico">📍</span>
+                                <div><span class="lbl">Адрес</span><span id="bcAddress"></span></div>
+                            </div>
+                            <div class="bc-row">
+                                <span class="ico">🕗</span>
+                                <div><span class="lbl">Часы работы</span><span id="bcHours"></span></div>
+                            </div>
+                            <div class="bc-row">
+                                <span class="ico">✆</span>
+                                <div><span class="lbl">Телефон</span><a id="bcPhone" href="#" data-cursor></a></div>
+                            </div>
+                            <div class="bc-row">
+                                <span class="ico">✉</span>
+                                <div><span class="lbl">E-mail</span><a id="bcEmail" href="#" data-cursor></a></div>
+                            </div>
+                            <div class="bc-row">
+                                <span class="ico">✈</span>
+                                <div><span class="lbl">Telegram</span><a href="https://t.me/N0RTHCAT" target="_blank" data-cursor>@N0RTHCAT</a></div>
+                            </div>
+                            <div class="bc-row">
+                                <span class="ico">◎</span>
+                                <div><span class="lbl">Сайт</span><a href="https://northcat.top" target="_blank" data-cursor>northcat.top</a></div>
+                            </div>
+                            <a href="contacts.html" class="btn-ghost" style="padding:11px 22px;font-size:.78rem;margin-top:6px;text-align:center;" data-cursor>Все контакты →</a>
+                        </div>
+                    </div>
+                    <form class="form-card reveal" id="bookingForm">
+                        <div class="form-row">
+                            <div class="field">
+                                <label>Имя</label>
+                                <input type="text" name="name" required placeholder="Ваше имя" data-cursor>
+                            </div>
+                            <div class="field">
+                                <label>Телефон / Telegram</label>
+                                <input type="text" name="contact" required placeholder="@username или телефон" data-cursor>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="field">
+                                <label>Услуга</label>
+                                <select name="service" data-cursor>
+                                    <option>Авторский эскиз</option>
+                                    <option>Орнаментал / Blackwork</option>
+                                    <option>Готическая каллиграфия</option>
+                                    <option>Перекрытие / Cover-up</option>
+                                    <option>Реставрация тату</option>
+                                    <option>Консультация</option>
+                                </select>
+                            </div>
+                            <div class="field">
+                                <label>Желаемая дата</label>
+                                <input type="date" name="date" data-cursor>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label>Описание идеи</label>
+                            <textarea name="idea" placeholder="Опишите сюжет, размер, расположение…" data-cursor></textarea>
+                        </div>
+                        <button type="submit" class="form-submit" data-cursor>Отправить заявку</button>
+                        <p class="form-note">Нажимая кнопку, вы соглашаетесь на обработку данных. Заявка дублируется в Telegram-бот студии.</p>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== CTA TELEGRAM ===== -->
+        <section class="cta-section" id="contact">
+            <div class="section-container">
+                <div class="cta-box mystic-frame">
+                    <h2>Готовы воплотить идею?</h2>
+                    <p style="color:var(--text-muted);font-size:1.05rem;max-width:520px;margin:0 auto;">Следите за новыми эскизами, свободными сеансами и процессом создания татуировок в нашем Telegram.</p>
+                    <a href="https://t.me/N0RTHCAT" target="_blank" class="telegram-glow-btn" data-cursor>
+                        <svg class="telegram-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.11.02-1.89 1.2-5.33 3.52-.5.35-.96.52-1.37.51-.45-.01-1.32-.26-1.97-.47-.8-.26-1.43-.4-1.38-.85.03-.23.35-.47.96-.71 3.76-1.64 6.27-2.72 7.53-3.25 3.58-1.51 4.32-1.77 4.81-1.78.11 0 .35.03.5.16.13.11.17.26.18.38-.01.07.01.21 0 .28z"/></svg>
+                        Вступить в Telegram @N0RTHCAT
+                    </a>
+                    <div style="margin-top:26px;font-size:.9rem;color:var(--text-muted);">
+                        Официальный сайт: <a href="https://northcat.top" style="color:var(--neon-pink);text-decoration:none;" data-cursor>northcat.top</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ===== ПОДВАЛ ===== -->
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-about">
+                <div class="footer-logo">NORTH<span>CAT</span></div>
+                <p>Тату-студия «Северный Кот». Готическая и оккультная графика, блэкворк, авторские эскизы. Void Crafted · Dark Urbanic.</p>
+                <div class="footer-socials">
+                    <a href="https://t.me/N0RTHCAT" target="_blank" title="Telegram" data-cursor>✈</a>
+                    <a href="https://northcat.top" target="_blank" title="Сайт" data-cursor>◎</a>
+                    <a href="#location" title="Карта" data-cursor>📍</a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>Навигация</h4>
+                <a href="#about" data-cursor>О студии</a>
+                <a href="#works" data-cursor>Работы</a>
+                <a href="#sketches" data-cursor>Скетчи</a>
+                <a href="#pricing" data-cursor>Цены</a>
+            </div>
+            <div class="footer-col">
+                <h4>Сервисы</h4>
+                <a href="nft-koty/index.html" data-cursor>NFT-генератор котов</a>
+                <a href="miniapp.html" data-cursor>Web3 Mini App</a>
+                <a href="contacts.html" data-cursor>Контакты</a>
+                <a href="admin.html" data-cursor>Админ-зона</a>
+            </div>
+            <div class="footer-col">
+                <h4>Контакты</h4>
+                <p id="footAddress"></p>
+                <p id="footPhone"></p>
+                <a href="https://t.me/N0RTHCAT" target="_blank" data-cursor>@N0RTHCAT</a>
+                <a href="https://northcat.top" target="_blank" data-cursor>northcat.top</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Студия татуировки «Северный Кот». Все права защищены.</p>
+            <p class="credits">Designed by <span>Dark Voio Studio</span>. Void Crafted.</p>
+        </div>
+    </footer>
+
+    <!-- ===== Чат поддержки ===== -->
+    <button class="chat-fab" id="chatFab" data-cursor>
+        <span class="pulse"></span>💬
+    </button>
+    <div class="chat-window" id="chatWindow">
+        <div class="chat-head">
+            <img src="cat_circle.jpg" alt="NORTHCAT">
+            <div>
+                <div class="title">Поддержка NORTHCAT</div>
+                <div class="status">Онлайн · отвечаем быстро</div>
+            </div>
+            <button class="chat-close" id="chatClose" data-cursor>×</button>
+        </div>
+        <div class="chat-body" id="chatBody"></div>
+        <div class="chat-quick" id="chatQuick">
+            <button data-cursor>Цены</button>
+            <button data-cursor>Записаться</button>
+            <button data-cursor>Адрес</button>
+        </div>
+        <div class="chat-input">
+            <input type="text" id="chatInput" placeholder="Напишите сообщение…" data-cursor>
+            <button id="chatSend" data-cursor>➤</button>
+        </div>
+    </div>
+
+    <!-- ===== Lightbox ===== -->
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" id="lightboxClose" data-cursor>×</button>
+        <img src="" alt="" id="lightboxImg">
+        <div class="lightbox-caption" id="lightboxCaption"></div>
+    </div>
+
+    <!-- ===== Тосты ===== -->
+    <div class="toast-wrap" id="toastWrap"></div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+    <script src="js/data.js"></script>
+    <script src="js/bg-webgl.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

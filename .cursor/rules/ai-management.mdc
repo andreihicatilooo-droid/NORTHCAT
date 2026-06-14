@@ -1,0 +1,31 @@
+---
+description: Управление проектом через AI — workflow, Todoist, GitHub MCP
+alwaysApply: true
+---
+
+# AI Management
+
+## Workflow
+1. Идея → `docs/IDEAS.md`
+2. Уточнение → `docs/INITIAL_TASKS.md` или `docs/BACKLOG.md`
+3. В работу → Todoist
+4. Завершено → `docs/COMPLETED.md`
+
+## Полезные запросы
+- «Что мне делать дальше?» — смотреть `BACKLOG.md`, P0
+- «План спринта на 2 недели»
+- «Дай quick win на 1 час»
+- «Обнови PROJECT_MEMORY.md»
+
+## Todoist
+- Проекты: «Дизайн NORTHCAT», «TG-бот / Агент»
+- Даты: `dueString` («завтра», «25 июня»)
+- TZ: Europe/Riga
+
+## GitHub MCP
+- Создание issues/PR, статус CI, поиск кода
+- Описания issues и PR — на русском
+- Не merge без проверки CI
+
+## Weekly ritual (четверг)
+Sprint review → Ideas review → Backlog planning → PROJECT_MEMORY update

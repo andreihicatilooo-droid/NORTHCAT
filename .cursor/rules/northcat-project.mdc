@@ -1,0 +1,40 @@
+---
+description: NORTHCAT — обзор проекта, бренд, структура репозитория
+alwaysApply: true
+---
+
+# NORTHCAT (Северный Кот)
+
+Тату-студия (бренд) + система управления салоном. Язык общения: **русский**.
+
+## Бренд
+- Сайт: northcat.top
+- Цвета: hot pink `#f4587e`, dark green-black `#0c120e`
+- Стиль: dark gothic, sphinx cat, sacred geometry, blackletter
+- Canva: https://www.canva.com/d/1WIUhM7eGyk1FpF
+- Гайд: `docs/VISUAL_IDENTITY.md`
+
+## Структура
+- `services/website/` — сайт northcat.top
+- `services/salon-api/` — API салона
+- `services/tg-bot/` — Telegram-бот с Claude/MCP
+- `database/` — схемы и миграции
+- `docs/` — планирование, бренд, архитектура
+- `config/` — ключи и интеграции (не коммитить секреты)
+
+## Дедлайны
+| Задача | Срок |
+|--------|------|
+| Дизайн (7 задач) | 25.06.2026 |
+| Docker / CI | 30.06.2026 |
+| Website + TG-bot MVP | 31.07.2026 |
+
+## Интеграции
+- **Todoist**: Andreihicatilooo, TZ Europe/Riga; `dueString` вместо `deadlineDate`
+- **LuxHost**: `config/API_CONFIG.md`
+- **GitHub MCP**: `.cursor/mcp.json`
+
+## Ключевые документы
+- `CLAUDE.md` — полное руководство
+- `docs/PROJECT_MAP.md`, `BACKLOG.md`, `INITIAL_TASKS.md`, `IDEAS.md`
+- `docs/MCP_SETUP.md`, `docs/AI_MANAGEMENT.md`

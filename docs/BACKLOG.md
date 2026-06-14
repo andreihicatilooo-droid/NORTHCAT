@@ -5,37 +5,93 @@
 
 ---
 
+## 🔍 Продуктовая дорожная карта (14.06.2026)
+
+> Полные требования: `docs/NORTHCAT-REQUIREMENTS.md`  
+> Задачи: TASK-050 (Фаза 0), TASK-051 (Фаза 1)
+
+| Фаза | Содержание | Задачи |
+|------|------------|--------|
+| **0** | GCP sync, виджет+прокси в монорепо, PostgreSQL | TASK-020, 050, 016 |
+| **1** | M1–M4: auth, кредиты, Gemini proxy, логи | TASK-051 |
+| **2** | M5–M10: Drive, шеринг, ТГ-админка | TBD |
+| **3** | M7–M12: почта, кешбек, PWA | TBD |
+
+---
+
+## 🔍 Аудит репозитория (14.06.2026)
+
+> Детали: `docs/project/INDEX.md` · **Предложения:** `docs/project/PROPOSALS.md`
+
+### P0 — критично
+
+| ID | Недочёт | Проект | Действие |
+|----|---------|--------|----------|
+| BUG-001 | `docker-compose` в `website/` ссылается на `./bot/`, бот в `tg-bot/` | infra | TASK-011 |
+| — | Нет `BOT_TOKEN`, TON-адреса, реального контента | website + bot | TASK-012 |
+| DEBT-001 | README описывает Next.js/Node, код — static/Python | docs | TASK-013 |
+
+### P1 — важно
+
+| ID | Недочёт | Проект |
+|----|---------|--------|
+| GAP-003 | Нет `docs/VISUAL_IDENTITY.md` (дедлайн 25.06) | design |
+| GAP-001 | `salon-api/` — только README | salon-api |
+| GAP-002 | `database/` — нет миграций | database |
+| DEBT-003 | Заявки в localStorage, нет backend | website |
+| DEBT-004 | Админка с клиентским паролем | website |
+| DEBT-002 | CI без build/lint/test | infra |
+| GAP-004 | Нет root `docker-compose` / `package.json` | infra |
+
+### P2 — отложить
+
+- Очистка дубликатов медиа в `services/website/ресурсы/` (~8.5 МБ)
+- Кириллица в Pirata One → fallback шрифт
+- Architecture diagram
+- Решение: Next.js vs static (отдельная идея)
+
+---
+
 ## 🎯 Current Sprint (14-28 июня 2026)
 
 **Дедлайн**: 28 июня 2026 (это неделя после дизайна!)
 
 ### Priority P0 (Обязательно к 28 июня)
 
+**Infrastructure** _(аудит: частично есть, нужен фикс)_
+- [ ] **TASK-011** Починить docker-compose paths (web + tg-bot) — BUG-001
+- [x] ~~Настроить Docker для website~~ — есть, но сломан путь к боту
+- [ ] Создать root `docker-compose.yml` для monorepo — GAP-004
+- [ ] Setup GitHub Actions: build Docker images — DEBT-002
+
+**Production readiness**
+- [ ] **TASK-012** Ключи бота, TON-адрес, контент в `data.js`, HTTPS
+- [ ] **TASK-013** Синхронизировать README/PROJECT_MAP с фактическим стеком
+
 **Design & Branding**
-- [ ] Экспортировать финальные ассеты в PNG/SVG/PDF
-- [ ] Завершить VISUAL_IDENTITY.md guide
+- [ ] Экспортировать финальные ассеты в PNG/SVG/PDF → `resources/design/`
+- [ ] Завершить VISUAL_IDENTITY.md guide — GAP-003
 - [ ] Создать 3+ logo variations
 
-**Infrastructure**
-- [ ] Настроить Docker для website проекта
-- [ ] Создать docker-compose.yml для local dev
-- [ ] Setup GitHub Actions основы
-
 **Documentation**
+- [ ] Обновить quick start guide (static site + Python bot, не Next.js)
 - [ ] Создать architecture diagram
-- [ ] Написать quick start guide
 
 ### Priority P1 (Хорошо бы, но не критично)
 
-**Website**
-- [ ] Инициализировать Next.js проект
-- [ ] Создать базовую структуру папок
-- [ ] Setup Tailwind CSS
+**Website** _(аудит: MVP ~90% готов, Next.js не нужен в спринте)_
+- [x] ~~Инициализировать Next.js~~ — **отменено**: production static HTML импортирован
+- [ ] Заменить демо-контент на реальные фото/тексты — TASK-012
+- [ ] Серверная авторизация админки — DEBT-004
 
-**TG-Bot**
-- [ ] Зарегистрировать бота в BotFather
-- [ ] Инициализировать проект (telegraf или node-telegram-bot-api)
-- [ ] Создать `/start` и `/help` команды
+**TG-Bot** _(аудит: aiogram 3 готов, нужны ключи)_
+- [x] ~~Инициализировать telegraf~~ — **готово**: Python aiogram 3 в `services/tg-bot/`
+- [x] `/start`, `/menu`, `/setup` — реализованы
+- [ ] Заполнить `.env` и проверить на production — TASK-012
+
+**Salon API & Database**
+- [ ] Начать `salon-api` (сейчас только README) — GAP-001
+- [ ] Первая миграция БД — GAP-002
 
 ---
 
@@ -298,6 +354,7 @@ Impact (High to Low)
 
 ---
 
-**Последнее обновление**: 14 июня 2026  
-**Версия**: 1.0 - Backlog System  
-**Управление**: Один человек + Claude AI assistant
+**Последнее обновление**: 14 июня 2026 (аудит + INDEX)  
+**Версия**: 1.1 - Backlog + Audit Findings  
+**Управление**: Один человек + Claude AI assistant  
+**Реестр**: `docs/project/INDEX.md`

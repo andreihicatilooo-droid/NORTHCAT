@@ -1,0 +1,27 @@
+name: LuxHost Check
+
+on:
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    environment: NORTH KEY
+    steps:
+      - name: Server details and supported OS
+        env:
+          LUXHOST: ${{ secrets.LUXHOST }}
+        run: |
+          SID="6a2a2050311009554939e44c"
+          curl -sS -H "Authorization: Bearer ${LUXHOST}" \
+            "https://api.luxhost.cc/public/api/servers/${SID}" > server.json
+          python3 - <<'PY'
+          import json
+          s = json.load(open("server.json"))
+          print("name:", s.get("name"))
+          print("product:", s.get("server", {}).get("name"))
+          print("current_os:", s.get("os", {}).get("slug"))
+          print("supported_os:")
+          for os in s.get("server", {}).get("supportedOs", []):
+              print(f"  - {os.get('slug')}: {os.get('name')} ({os.get('group')})")
+          PY

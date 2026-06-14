@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NORTHCAT — Админ-зона</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="theme-color" content="#07080a">
+    <link rel="icon" type="image/jpeg" href="cat_circle.jpg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Pirata+One&family=Grenze+Gotisch:wght@400;500;600;700;800;900&family=Cinzel:wght@400;600;700&family=Montserrat:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body { cursor: auto; }
+        .admin-wrap { min-height: 100vh; display: flex; }
+        /* Логин */
+        .login-screen {
+            position: fixed; inset: 0; z-index: 100;
+            display: flex; align-items: center; justify-content: center;
+            background: radial-gradient(circle at center, #190b22 0%, var(--bg-dark) 80%);
+        }
+        .login-card {
+            width: 100%; max-width: 380px;
+            background: var(--bg-card); border: 1px solid var(--border-color);
+            padding: 40px 34px; text-align: center;
+        }
+        .login-card .sig { font-family: var(--font-gothic); font-size: 2.4rem; color: var(--neon-pink); text-shadow: 0 0 20px var(--neon-pink-glow); margin-bottom: 6px; }
+        .login-card .sub { font-size: .7rem; letter-spacing: 5px; text-transform: uppercase; color: var(--text-dim); margin-bottom: 28px; }
+        .login-card input {
+            width: 100%; background: var(--bg-deep); border: 1px solid var(--border-soft);
+            color: var(--text-light); padding: 13px; margin-bottom: 14px; border-radius: var(--radius);
+            font-family: var(--font-body); font-size: .92rem; text-align: center; letter-spacing: 2px;
+        }
+        .login-card input:focus { outline: none; border-color: var(--neon-pink); }
+        .login-hint { font-size: .72rem; color: var(--text-dim); margin-top: 14px; }
+
+        /* Сайдбар */
+        .admin-side {
+            width: 240px; background: #050507; border-right: 1px solid var(--border-soft);
+            padding: 26px 0; position: sticky; top: 0; height: 100vh; flex-shrink: 0;
+        }
+        .admin-logo { font-family: var(--font-display); font-size: 1.3rem; letter-spacing: 3px; padding: 0 24px 24px; border-bottom: 1px solid var(--border-soft); }
+        .admin-logo span { color: var(--neon-pink); }
+        .admin-nav { padding: 18px 0; }
+        .admin-nav button {
+            width: 100%; text-align: left; background: none; border: none; color: var(--text-muted);
+            padding: 13px 24px; font-family: var(--font-body); font-size: .88rem; font-weight: 600;
+            cursor: pointer; display: flex; gap: 12px; align-items: center; transition: all .25s; border-left: 3px solid transparent;
+        }
+        .admin-nav button:hover { color: var(--text-light); background: rgba(255,255,255,.03); }
+        .admin-nav button.active { color: var(--neon-pink); border-left-color: var(--neon-pink); background: rgba(255,59,119,.06); }
+        .admin-logout { margin: 18px 24px 0; }
+
+        /* Контент */
+        .admin-main { flex: 1; padding: 30px 36px; max-width: 100%; overflow-x: hidden; }
+        .admin-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 28px; flex-wrap: wrap; gap: 12px; }
+        .admin-head h1 { font-family: var(--font-display); font-size: 1.8rem; letter-spacing: 1px; }
+        .admin-panel { display: none; }
+        .admin-panel.active { display: block; animation: fadeIn .4s; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+        .stat-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 18px; margin-bottom: 30px; }
+        .stat-card { background: var(--bg-card); border: 1px solid var(--border-soft); padding: 22px; }
+        .stat-card .v { font-family: var(--font-display); font-size: 2rem; color: var(--neon-pink); }
+        .stat-card .l { font-size: .74rem; letter-spacing: 1px; text-transform: uppercase; color: var(--text-dim); margin-top: 4px; }
+
+        .admin-table { width: 100%; border-collapse: collapse; background: var(--bg-card); border: 1px solid var(--border-soft); }
+        .admin-table th, .admin-table td { padding: 13px 14px; text-align: left; font-size: .85rem; border-bottom: 1px solid var(--border-soft); }
+        .admin-table th { background: var(--bg-deep); color: var(--neon-pink); font-size: .72rem; letter-spacing: 1px; text-transform: uppercase; }
+        .admin-table tr:hover td { background: rgba(255,255,255,.02); }
+        .badge { padding: 3px 10px; border-radius: 20px; font-size: .68rem; font-weight: 700; text-transform: uppercase; }
+        .badge.new { background: rgba(255,59,119,.15); color: var(--neon-pink); }
+        .badge.done { background: rgba(58,210,159,.15); color: var(--ok-green); }
+        .admin-btn { background: transparent; border: 1px solid var(--border-soft); color: var(--text-muted); padding: 6px 12px; font-size: .74rem; cursor: pointer; border-radius: var(--radius); transition: all .25s; margin-right: 6px; font-family: var(--font-body); }
+        .admin-btn:hover { border-color: var(--neon-pink); color: var(--neon-pink); }
+        .admin-btn.danger:hover { border-color: #ff4d4d; color: #ff4d4d; }
+
+        .admin-form { background: var(--bg-card); border: 1px solid var(--border-soft); padding: 26px; max-width: 560px; margin-bottom: 26px; }
+        .admin-form .field input, .admin-form .field textarea, .admin-form .field select {
+            width: 100%; background: var(--bg-deep); border: 1px solid var(--border-soft); color: var(--text-light);
+            padding: 11px 13px; border-radius: var(--radius); font-family: var(--font-body); font-size: .88rem;
+        }
+        .admin-form .field { margin-bottom: 16px; }
+        .admin-form .field label { display: block; font-size: .72rem; letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 7px; }
+        .admin-save { background: var(--neon-pink); color: #fff; border: none; padding: 12px 26px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; border-radius: var(--radius); }
+        .empty { color: var(--text-dim); font-size: .9rem; padding: 20px; text-align: center; }
+
+        @media (max-width: 760px) {
+            .admin-side { width: 64px; }
+            .admin-logo, .admin-nav button span:last-child, .admin-logout { display: none; }
+            .admin-nav button { justify-content: center; padding: 14px 0; }
+            .admin-main { padding: 20px 16px; }
+            .admin-table { font-size: .78rem; display: block; overflow-x: auto; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== Экран входа ===== -->
+    <div class="login-screen" id="loginScreen">
+        <div class="login-card">
+            <div class="sig">NORTHCAT</div>
+            <div class="sub">Admin Zone</div>
+            <input type="password" id="pwd" placeholder="Пароль" autocomplete="current-password">
+            <button class="admin-save" id="loginBtn" style="width:100%;">Войти</button>
+            <div class="login-hint">Демо-пароль: <b>northcat</b></div>
+        </div>
+    </div>
+
+    <!-- ===== Панель ===== -->
+    <div class="admin-wrap" id="adminWrap" style="display:none;">
+        <aside class="admin-side">
+            <div class="admin-logo">NORTH<span>CAT</span></div>
+            <nav class="admin-nav" id="adminNav">
+                <button class="active" data-tab="dashboard"><span>▣</span><span>Дашборд</span></button>
+                <button data-tab="bookings"><span>✎</span><span>Записи</span></button>
+                <button data-tab="news"><span>✶</span><span>Новости</span></button>
+                <button data-tab="products"><span>🛒</span><span>Товары</span></button>
+                <button data-tab="messages"><span>✉</span><span>Сообщения</span></button>
+            </nav>
+            <div class="admin-logout">
+                <button class="admin-btn" id="logoutBtn" style="width:100%;">Выйти</button>
+                <a class="admin-btn" href="index.html" style="width:100%;display:block;text-align:center;margin-top:8px;text-decoration:none;">← На сайт</a>
+            </div>
+        </aside>
+
+        <main class="admin-main">
+            <!-- Дашборд -->
+            <section class="admin-panel active" id="tab-dashboard">
+                <div class="admin-head"><h1>Дашборд</h1></div>
+                <div class="stat-cards" id="statCards"></div>
+                <h3 style="font-family:var(--font-display);margin-bottom:14px;">Последние заявки</h3>
+                <div id="recentBookings"></div>
+            </section>
+
+            <!-- Записи -->
+            <section class="admin-panel" id="tab-bookings">
+                <div class="admin-head"><h1>Записи на сеанс</h1><button class="admin-btn danger" id="clearBookings">Очистить все</button></div>
+                <div id="bookingsTable"></div>
+            </section>
+
+            <!-- Новости -->
+            <section class="admin-panel" id="tab-news">
+                <div class="admin-head"><h1>Лента новостей</h1></div>
+                <form class="admin-form" id="newsForm">
+                    <h3 style="font-family:var(--font-display);margin-bottom:16px;">Добавить новость</h3>
+                    <div class="field"><label>Заголовок</label><input type="text" name="title" required></div>
+                    <div class="field"><label>Тег</label><input type="text" name="tag" placeholder="Студия / Акция / Эскизы" required></div>
+                    <div class="field"><label>Текст</label><textarea name="excerpt" rows="3" required></textarea></div>
+                    <button class="admin-save" type="submit">Опубликовать</button>
+                </form>
+                <div id="newsTable"></div>
+            </section>
+
+            <!-- Товары -->
+            <section class="admin-panel" id="tab-products">
+                <div class="admin-head"><h1>Каталог товаров</h1><span style="font-size:.8rem;color:var(--text-dim);">Изменение цен сохраняется локально</span></div>
+                <div id="productsTable"></div>
+            </section>
+
+            <!-- Сообщения чата -->
+            <section class="admin-panel" id="tab-messages">
+                <div class="admin-head"><h1>Сообщения поддержки</h1></div>
+                <p style="color:var(--text-muted);font-size:.9rem;margin-bottom:18px;">Все диалоги поддержки переводятся в Telegram-бот <a href="https://t.me/N0RTHCAT" target="_blank" style="color:var(--neon-pink);">@N0RTHCAT</a>. Здесь отображаются сохранённые заявки из чата.</p>
+                <div id="messagesTable"></div>
+            </section>
+        </main>
+    </div>
+
+    <div class="toast-wrap" id="toastWrap"></div>
+
+    <script src="js/data.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+</html>
