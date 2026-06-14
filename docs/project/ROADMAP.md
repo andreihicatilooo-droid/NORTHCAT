@@ -4,6 +4,25 @@
 
 **Обновлено:** 2026-06-14
 
+## GitHub Roadmap
+
+| Ресурс | Ссылка |
+|--------|--------|
+| **Issues (все задачи)** | https://github.com/andreihicatilooo-droid/NORTHCAT/issues |
+| **Milestones (фазы)** | https://github.com/andreihicatilooo-droid/NORTHCAT/milestones |
+| **P0 сейчас** | [#3 TASK-020](https://github.com/andreihicatilooo-droid/NORTHCAT/issues/3) → [#4 TASK-011](https://github.com/andreihicatilooo-droid/NORTHCAT/issues/4) → [#5 TASK-012](https://github.com/andreihicatilooo-droid/NORTHCAT/issues/5) |
+
+**Labels:** `priority/P0–P2` · `phase/1–4` · `area/*` · `type/task|bug|debt|gap|idea`
+
+**Синхронизация:** `./scripts/github-roadmap-setup.sh` — создаёт labels, milestones и issues из `docs/project/`.
+
+**GitHub Project board** (Kanban / Roadmap view):
+```bash
+gh auth refresh -s project,read:project
+./scripts/github-roadmap-setup.sh --project
+```
+Или вручную: **Projects → New project → Board** → Add items from repo → View **Roadmap** по Milestone.
+
 ## Phase 1: Foundation & Design (до 25.06.2026)
 
 | Milestone | Задачи | Статус |
