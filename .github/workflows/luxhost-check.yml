@@ -1,0 +1,31 @@
+name: LuxHost Check
+
+on:
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    environment: NORTH KEY
+    steps:
+      - name: List LuxHost servers
+        env:
+          LUXHOST: ${{ secrets.LUXHOST }}
+        run: |
+          curl -sS -H "Authorization: Bearer ${LUXHOST}" \
+            "https://api.luxhost.cc/public/api/servers/list?limit=100" \
+            | tee servers.json
+          echo "---"
+          python3 - <<'PY'
+          import json
+          data = json.load(open("servers.json"))
+          items = data if isinstance(data, list) else data.get("items") or data.get("servers") or data.get("data") or []
+          if isinstance(data, dict) and not items and "id" in data:
+              items = [data]
+          for s in items:
+              name = s.get("name", "?")
+              sid = s.get("id", "?")
+              ips = [i.get("address") or i.get("ip") for i in (s.get("ipv4") or [])]
+              status = s.get("status", "?")
+              print(f"{name}\t{sid}\t{status}\t{','.join(filter(None, ips)) or '-'}")
+          PY
