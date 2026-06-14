@@ -1,0 +1,16 @@
+{
+  "mcp": {
+    "servers": {
+      "github": {
+        "type": "http",
+        "url": "https://api.githubcopilot.com/mcp/",
+        "enabled": true
+      }
+    }
+  },
+  "project": {
+    "name": "NORTHCAT",
+    "description": "Татуировочная студия бренд + система управления салоном",
+    "language": "ru"
+  }
+}
