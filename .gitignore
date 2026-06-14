@@ -150,3 +150,7 @@ vite.config.ts.timestamp-*
 import/gcp-production/
 import/backups/
 import/gcp-production-edit/
+
+# Local drafts (not for commit)
+tmp.txr
+*.txr
