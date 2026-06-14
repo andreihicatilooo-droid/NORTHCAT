@@ -1,0 +1,36 @@
+---
+description: Команды разработки, git-практики и конфигурация окружения
+alwaysApply: true
+---
+
+# Разработка NORTHCAT
+
+## Команды
+```bash
+# Website (services/website/)
+npm install && npm run dev && npm run build
+
+# TG-bot (services/tg-bot/)
+npm install && npm run dev && npm start
+
+# Docker
+docker-compose up -d && docker-compose logs -f <service>
+
+# Database
+npm run migrate && npm run seed
+```
+
+## Git
+- **main** — production; feature-ветки: `claude/*`
+- Коммиты: `<type>: <description>` (feat, fix, design, docs)
+- Не коммитить `.env`; шаблон — `.env.example`
+- Секреты — `config/API_CONFIG.md` (не в git) и GitHub Secrets
+
+## Код
+- Сервисы слабо связаны, каждый в `services/` со своим README
+- Docker для изоляции сервисов
+- Дизайн-ассеты — `resources/design/`
+
+## Качество
+- `npm run lint`, `npm run format`, `npm test`
+- TypeScript: `npm run type-check`
