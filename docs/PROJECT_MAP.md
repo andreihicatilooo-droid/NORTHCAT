@@ -76,14 +76,16 @@ NORTHCAT
 
 ## 📈 Статус по направлениям
 
-| Направление | Статус | Прогресс | Дедлайн |
-|------------|--------|----------|---------|
-| 🎨 Дизайн | 🟡 In Progress | 70% | 25.06.2026 |
-| 🌐 Website | 🔴 Not Started | 0% | 31.07.2026 |
-| 💼 Salon API | 🔴 Not Started | 0% | 31.07.2026 |
-| 🤖 TG-Bot MVP | 🟡 In Progress | 30% | 31.07.2026 |
-| 🏗️ Infrastructure | 🔴 Not Started | 0% | 30.06.2026 |
-| 📋 Documentation | 🟢 In Progress | 50% | Ongoing |
+| Направление | Статус | Прогресс | Дедлайн | Недочёты |
+|------------|--------|----------|---------|----------|
+| 🎨 Дизайн | 🟡 In Progress | 70% | 25.06.2026 | GAP-003 |
+| 🌐 Website | 🟢 MVP Ready | ~90% | 31.07.2026 | TASK-012, DEBT-003/004 |
+| 💼 Salon API | 🔴 Not Started | 0% | 31.07.2026 | GAP-001 |
+| 🤖 TG-Bot MVP | 🟢 Mostly Done | ~70% | 31.07.2026 | BUG-001, TASK-012 |
+| 🏗️ Infrastructure | 🟡 Partial | 50% | 30.06.2026 | BUG-001, DEBT-002, GAP-004 |
+| 📋 Documentation | 🟡 Out of Sync | 50% | Ongoing | DEBT-001, TASK-013 |
+
+> Аудит: 14.06.2026 · Реестр: `docs/project/INDEX.md`
 
 ## 🔗 Активные интеграции
 
@@ -114,5 +116,5 @@ NORTHCAT
 
 ---
 
-**Последнее обновление**: 14 июня 2026
-**Версия**: 1.0 - Initial Project Map
+**Последнее обновление**: 14 июня 2026 (аудит)  
+**Версия**: 1.1 - Project Map + Audit Status

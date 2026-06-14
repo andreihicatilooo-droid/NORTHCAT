@@ -32,3 +32,16 @@ python bot.py
 `https://northcat.top/tonconnect-manifest.json`.
 
 > Файл `.env` и `settings.json` не коммитьте — это локальные данные.
+
+---
+
+## Недочёты (аудит 14.06.2026)
+
+| Приоритет | Недочёт | ID |
+|-----------|---------|-----|
+| **P0** | Путь в `website/docker-compose.yml` не указывает на `services/tg-bot/` | BUG-001 |
+| **P0** | Нет `BOT_TOKEN`, `OPERATOR_CHAT_ID` в `.env` | TASK-012 |
+| **P1** | Заявки не сохраняются в БД (только Telegram) | DEBT-003 |
+| **P1** | README в корне репо описывает Node.js/Telegraf | DEBT-001 |
+
+Реестр: `docs/project/INDEX.md`

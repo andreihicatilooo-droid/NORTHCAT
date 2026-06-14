@@ -35,7 +35,8 @@ BUG  → triage → fix  → verify → done
 
 - `ROADMAP.md` — фазы и вехи (ссылки на TASK)
 - `INDEX.md` — реестр активных записей
-- `templates/` — шаблоны для новых записей
+- `PROPOSALS.md` — **предложения задач**, порядок работ, формулировки Todoist
+- `templates/` — шаблоны task, bug, debt, gap, idea
 
 ## Связь с Todoist
 

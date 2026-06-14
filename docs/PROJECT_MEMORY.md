@@ -17,7 +17,18 @@
 **SSH:** `gcloud compute ssh andreihicatilooo@northcat-server --zone=europe-west4-a --project=cerber-495808`  
 **Контейнеры:** `northcat-web`, `northcat-bot`, `caddy`
 
-**Импорт в репо:** `services/website/`, `services/tg-bot/` (ветка `claude/import-production-website` → `main`)
+**Импорт в репо:** `services/website/`, `services/tg-bot/` (коммиты `9911bc6`, `0ad1a8c` от 14.06 — **может быть устаревшим**)
+
+### Синхронизация GCP → монорепо
+
+| Этап | Где | Команда |
+|------|-----|---------|
+| Живой production | GCP `/home/G6E6N/northcat-project/` | SSH / scp |
+| Локальное зеркало | `import/gcp-production/` (не в git) | `./scripts/gcp-pull-production.sh` |
+| Сравнение | diff vs `services/` | `./scripts/gcp-diff-production.sh` |
+| Слияние | `services/website/`, `services/tg-bot/` | см. `import/README.md` |
+
+Задача: **TASK-020** · На сервере код **монолитный** (сайт + `bot/`), в репо — **раздельно**.
 
 ### LuxHost (VPS)
 
@@ -68,6 +79,12 @@ Workflow проверки: `.github/workflows/luxhost-check.yml` (`workflow_disp
 # GCP — список VM
 ./scripts/gcp-list-vms.sh
 
+# GCP — выгрузка production в import/gcp-production/
+./scripts/gcp-pull-production.sh
+
+# Сравнение выгрузки с services/website и services/tg-bot
+./scripts/gcp-diff-production.sh
+
 # LuxHost — список серверов (нужен ключ)
 curl -sH "Authorization: Bearer $LUXHOST" \
   https://api.luxhost.cc/public/api/servers/list
@@ -78,5 +95,17 @@ curl -sH "Authorization: Bearer $LUXHOST" \
 ## Заметки
 
 - LuxHost `WINDOWS-1` — Windows-only; для Linux VPS нужен другой тариф или GCP
+- Production код импортирован с `northcat-server` (коммиты 9911bc6, 0ad1a8c)
+
+## Аудит репозитория (14.06.2026)
+
+Полный реестр недочётов: `docs/project/INDEX.md`
+
+| P0 | P1 | P2 |
+|----|----|-----|
+| BUG-001 docker paths | GAP-001 salon-api пуст | Очистка медиа |
+| TASK-012 publish keys | GAP-002 database пуст | Architecture diagram |
+| DEBT-001 docs ≠ code | GAP-003 VISUAL_IDENTITY | Next.js vs static |
+
 - Секреты и пароли **не хранить** в git; шаблоны — `.env.example`
 - `config/API_CONFIG.md` — локальные ключи (не в git)
