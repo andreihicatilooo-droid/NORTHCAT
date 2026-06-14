@@ -33,9 +33,11 @@ BUG  → triage → fix  → verify → done
 
 ## Файлы
 
+- **`DIRECTIONS-MAP.md`** — **главная навигация**: выжимка, 6 направлений, 4 уровня, что сделано, P0
 - `ROADMAP.md` — фазы и вехи (ссылки на TASK)
 - `INDEX.md` — реестр активных записей
 - `PROPOSALS.md` — **предложения задач**, порядок работ, формулировки Todoist
+- `PRODUCT-ROADMAP.md` — продуктовые карточки GitHub (#28–43)
 - `templates/` — шаблоны task, bug, debt, gap, idea
 
 ## Связь с Todoist

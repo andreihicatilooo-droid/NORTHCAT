@@ -1,6 +1,7 @@
 # ROADMAP — NORTHCAT
 
-> Фазы и вехи. Детали — в TASK-*.md · Реестр: [INDEX.md](INDEX.md) · Предложения: [PROPOSALS.md](PROPOSALS.md)
+> Фазы и вехи. **Навигация по направлениям:** [DIRECTIONS-MAP.md](DIRECTIONS-MAP.md)  
+> Детали — в TASK-*.md · Реестр: [INDEX.md](INDEX.md) · Предложения: [PROPOSALS.md](PROPOSALS.md)
 
 **Обновлено:** 2026-06-14
 
@@ -23,7 +24,21 @@ gh auth refresh -s project,read:project
 ```
 Или вручную: **Projects → New project → Board** → Add items from repo → View **Roadmap** по Milestone.
 
-## Phase 1: Foundation & Design (до 25.06.2026)
+## Phase 0: Product Foundation (июль 2026) — NORTHCAT-REQUIREMENTS
+
+| Milestone | Задачи | Статус |
+|-----------|--------|--------|
+| GCP sync + monorepo fix | TASK-020, TASK-011 | ⏳ P0 |
+| Виджет + прокси Gemini в репо | [TASK-050](tasks/TASK-050-product-phase0-foundation.md) | ⏳ backlog |
+| PostgreSQL + migrations | TASK-016 | ⏳ |
+
+## Phase 1: Core Product (август 2026) — M1–M4
+
+| Milestone | Задачи | Статус |
+|-----------|--------|--------|
+| Auth + credits + proxy | [TASK-051](tasks/TASK-051-product-phase1-core.md) | 📅 after TASK-050 |
+
+## Phase 1 (legacy): Design & Foundation (до 25.06.2026)
 
 | Milestone | Задачи | Статус |
 |-----------|--------|--------|

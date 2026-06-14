@@ -1,6 +1,7 @@
 # INDEX — реестр активных записей
 
 > Обновляй при смене статуса. Сортировка: active/blocked → priority desc.  
+> **Карта направлений (выжимка + куда двигаться):** [DIRECTIONS-MAP.md](DIRECTIONS-MAP.md)  
 > **Предложения и Todoist:** [PROPOSALS.md](PROPOSALS.md)
 
 **Обновлено:** 2026-06-14
@@ -14,6 +15,15 @@
 | [TASK-011](tasks/TASK-011-fix-monorepo-docker.md) | Починить Docker/monorepo | infra | 20.06 | backlog | after TASK-020 |
 | [TASK-012](tasks/TASK-012-production-readiness.md) | Готовность к публикации | website | 20.06 | backlog | .env бота |
 | [TASK-013](tasks/TASK-013-sync-documentation.md) | Синхронизировать документацию | docs | 20.06 | backlog | README |
+
+| [TASK-050](tasks/TASK-050-product-phase0-foundation.md) | Фаза 0: виджет + backend | product | P0 | backlog | TASK-020 |
+| [TASK-051](tasks/TASK-051-product-phase1-core.md) | Фаза 1: M1–M4 ядро | product | P0 | backlog | TASK-050 |
+
+## Документ требований и дорожная карта
+
+- [NORTHCAT-REQUIREMENTS.md](../../NORTHCAT-REQUIREMENTS.md) — примерочная, Gemini, PWA, админка ТГ
+- [PRODUCT-ROADMAP.md](PRODUCT-ROADMAP.md) — карточки GitHub (issues #28–43, milestones #6–9)
+- Доска: `./scripts/gh-create-project.sh` (нужен личный токен с project scope)
 
 ## Backlog (P1)
 
