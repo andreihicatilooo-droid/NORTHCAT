@@ -1,0 +1,21 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    environment: NORTH KEY
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Verify GitHub API access
+        env:
+          GH_TOKEN: ${{ secrets.CURSOR_GITHUB_TOKEN }}
+        run: |
+          gh api repos/${{ github.repository }} --jq '{name:.full_name, private:.private}'
+          gh api repos/${{ github.repository }}/issues --jq 'length'
