@@ -12,5 +12,43 @@
     "name": "NORTHCAT",
     "description": "Татуировочная студия бренд + система управления салоном",
     "language": "ru"
+  },
+  "knowledge-base": {
+    "enabled": true,
+    "path": "knowledge",
+    "auto-organize": true,
+    "ai-agent": {
+      "enabled": true,
+      "instructions-file": "knowledge/ai-agents/INSTRUCTIONS.md",
+      "context-files": [
+        "knowledge/tasks/current-sprint.md",
+        "knowledge/tasks/backlog.md",
+        "knowledge/brain/ideas.md",
+        "knowledge/brain/questions.md",
+        "knowledge/brain/connections.md"
+      ]
+    }
+  },
+  "automation": {
+    "weekly-review": {
+      "enabled": true,
+      "day": "friday",
+      "message": "Еженедельный review: что готово? готовимся к новому спринту?"
+    },
+    "sprint-planning": {
+      "enabled": true,
+      "day": "monday",
+      "message": "Понедельник! Спланируем неделю? Максимум 5 задач 💪"
+    },
+    "focus-check": {
+      "enabled": true,
+      "interval": "when-asked",
+      "keywords": ["что делать", "не знаю", "потерял фокус", "помощь"]
+    }
+  },
+  "ai-prompts": {
+    "welcome": "Привет! 👋 Я Claude - твой project manager. Нужна помощь с NORTHCAT Knowledge Base? Спроси:\n- 'Что мне делать дальше?' - текущие приоритеты\n- 'Добавь мою идею' - организую твою идею\n- 'Переоцени приоритеты' - матрица приоритизации\n- 'Покажи прогресс' - статистика\n\nПолная инструкция: /knowledge/ai-agents/INSTRUCTIONS.md",
+    "focus-lost": "Похоже ты потерял фокус. Давай разберемся:\n1. Твой current-sprint имеет {sprint-count} задач\n2. Top P1 сейчас это:\n   {top-p1-tasks}\n3. Начни с первой? 💪",
+    "completion": "Отлично! 🎉 Ты завершил {task-name}!\nЭто {sprint-week} неделя. Продолжаем? Следующая задача: {next-task}"
   }
 }
