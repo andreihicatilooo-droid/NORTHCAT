@@ -1,0 +1,212 @@
+{
+  "project": {
+    "name": "NORTHCAT",
+    "fullName": "NORTHCAT (Северный Кот)",
+    "description": "Complete digital infrastructure for a dark gothic tattoo studio brand + salon management system",
+    "website": "northcat.top",
+    "timezone": "Europe/Riga",
+    "email": "andreihicatilooo@gmail.com",
+    "repository": "andreihicatilooo-droid/northcat",
+    "lastUpdated": "2026-06-18"
+  },
+  "documentation": {
+    "main": {
+      "file": "CLAUDE.md",
+      "description": "Полный гайд для Claude Code - читай в первую очередь",
+      "type": "primary"
+    },
+    "index": {
+      "file": "PROJECT_INDEX.md",
+      "description": "Этот индекс - для быстрой навигации",
+      "type": "reference"
+    },
+    "planning": {
+      "projectMemory": "docs/PROJECT_MEMORY.md",
+      "projectMap": "docs/PROJECT_MAP.md",
+      "initialTasks": "docs/INITIAL_TASKS.md",
+      "backlog": "docs/BACKLOG.md",
+      "completed": "docs/COMPLETED.md",
+      "ideas": "docs/IDEAS.md"
+    },
+    "branding": {
+      "visualIdentity": "docs/VISUAL_IDENTITY.md",
+      "resourcesLinks": "docs/RESOURCES_LINKS.md"
+    },
+    "configuration": {
+      "apiConfig": "config/API_CONFIG.md",
+      "aiManagement": "docs/AI_MANAGEMENT.md"
+    }
+  },
+  "branches": {
+    "active": "claude/hopeful-pascal-8bsiym",
+    "main": {
+      "name": "main",
+      "description": "Production-ready code",
+      "protected": true
+    },
+    "development": {
+      "name": "claude/hopeful-pascal-8bsiym",
+      "description": "Current development branch",
+      "status": "active"
+    }
+  },
+  "services": {
+    "website": {
+      "path": "services/website",
+      "name": "northcat.top",
+      "description": "Frontend and backend for tattoo studio website",
+      "type": "Next.js/React"
+    },
+    "salonApi": {
+      "path": "services/salon-api",
+      "name": "Salon API",
+      "description": "REST API for salon management",
+      "type": "Node.js"
+    },
+    "telegramBot": {
+      "path": "services/tg-bot",
+      "name": "Telegram Bot",
+      "description": "Telegram bot with Claude AI integration via MCP",
+      "type": "Node.js"
+    },
+    "adminPanel": {
+      "path": "services/admin-panel",
+      "name": "Admin Panel",
+      "description": "Administrative tools and dashboard",
+      "type": "React"
+    }
+  },
+  "infrastructure": {
+    "docker": "docker/",
+    "kubernetes": "k8s/",
+    "database": "database/",
+    "monitoring": "monitoring/",
+    "scripts": "scripts/",
+    "github": ".github/"
+  },
+  "integrations": {
+    "todoist": {
+      "status": "active",
+      "account": "Andreihicatilooo",
+      "projects": [
+        {
+          "name": "Дизайн NORTHCAT",
+          "tasks": 7,
+          "deadline": "2026-06-25",
+          "status": "in_progress"
+        },
+        {
+          "name": "TG-бот / Агент",
+          "status": "in_development"
+        }
+      ],
+      "notes": "Use dueString instead of deadlineDate (Free plan)"
+    },
+    "canva": {
+      "status": "active",
+      "url": "https://www.canva.com/d/1WIUhM7eGyk1FpF",
+      "description": "Design platform for brand and marketing materials",
+      "candidates": 4
+    },
+    "luxhost": {
+      "status": "active",
+      "api": "https://api.luxhost.cc/public/api",
+      "description": "Hosting infrastructure",
+      "config": "config/API_CONFIG.md"
+    },
+    "zapier": {
+      "status": "pending",
+      "description": "Jira synchronization awaiting OAuth setup"
+    },
+    "github": {
+      "status": "active",
+      "features": ["CI/CD", "Actions", "Workflows"]
+    }
+  },
+  "design": {
+    "brand": {
+      "name": "Dark Gothic Tattoo Studio",
+      "primaryColor": "#f4587e",
+      "primaryColorName": "Hot Pink",
+      "secondaryColor": "#0c120e",
+      "secondaryColorName": "Dark Green-Black",
+      "illustration": "Sphinx cat with sacred geometry",
+      "typography": "Blackletter"
+    }
+  },
+  "commands": {
+    "git": {
+      "clone": "git clone <repo>",
+      "checkout": "git checkout claude/hopeful-pascal-8bsiym",
+      "pull": "git pull origin claude/hopeful-pascal-8bsiym",
+      "commit": "git commit -m \"<type>: description\"",
+      "push": "git push -u origin claude/hopeful-pascal-8bsiym"
+    },
+    "website": {
+      "install": "npm install",
+      "dev": "npm run dev",
+      "build": "npm run build",
+      "preview": "npm run preview",
+      "lint": "npm run lint",
+      "typeCheck": "npm run type-check"
+    },
+    "bot": {
+      "cd": "cd services/tg-bot/",
+      "install": "npm install",
+      "dev": "npm run dev",
+      "start": "npm start"
+    },
+    "docker": {
+      "build": "docker-compose build",
+      "up": "docker-compose up -d",
+      "down": "docker-compose down",
+      "logs": "docker-compose logs -f <service>",
+      "rebuild": "docker-compose up -d --build <service>"
+    },
+    "database": {
+      "migrate": "npm run migrate",
+      "seed": "npm run seed",
+      "rollback": "npm run rollback",
+      "status": "npm run migration:status"
+    },
+    "testing": {
+      "test": "npm test",
+      "watch": "npm test -- --watch",
+      "coverage": "npm test -- --coverage",
+      "format": "npm run format",
+      "lint": "npm run lint"
+    }
+  },
+  "milestones": [
+    {
+      "task": "Design NORTHCAT (7 tasks)",
+      "deadline": "2026-06-25",
+      "status": "in_progress"
+    },
+    {
+      "task": "Jira OAuth Setup",
+      "status": "pending"
+    },
+    {
+      "task": "TG-Bot MVP",
+      "status": "in_development"
+    },
+    {
+      "task": "Website Launch",
+      "status": "planned"
+    }
+  ],
+  "quickLinks": {
+    "canvaDesign": "https://www.canva.com/d/1WIUhM7eGyk1FpF",
+    "luxhostAPI": "https://api.luxhost.cc/public/api",
+    "website": "northcat.top"
+  },
+  "searchIndex": {
+    "planning": ["docs/PROJECT_MEMORY.md", "docs/PROJECT_MAP.md", "docs/INITIAL_TASKS.md", "docs/BACKLOG.md"],
+    "design": ["docs/VISUAL_IDENTITY.md", "design/"],
+    "configuration": ["config/API_CONFIG.md", "docs/RESOURCES_LINKS.md"],
+    "services": ["services/website", "services/salon-api", "services/tg-bot", "services/admin-panel"],
+    "infrastructure": ["docker/", "k8s/", "database/"],
+    "documentation": ["CLAUDE.md", "PROJECT_INDEX.md", "docs/"]
+  }
+}
