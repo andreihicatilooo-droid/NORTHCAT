@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="hz:slide-selector" content=".slide">
+    <meta data-canvas-width="1080" data-canvas-height="1080">
+    <title>NORTHCAT - Магическая Печать</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: #0c120e;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .slide {
+            width: 1080px;
+            height: 1080px;
+            background: #0c120e;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Фоновые элементы */
+        .background-pattern {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0.1;
+            background-image:
+                repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(244, 88, 126, 0.1) 35px, rgba(244, 88, 126, 0.1) 70px),
+                repeating-linear-gradient(-45deg, transparent, transparent 35px, rgba(244, 88, 126, 0.1) 35px, rgba(244, 88, 126, 0.1) 70px);
+        }
+
+        /* Основной контейнер эмблемы */
+        .emblem-container {
+            position: absolute;
+            width: 1000px;
+            height: 1000px;
+            left: 40px;
+            top: 40px;
+        }
+
+        /* SVG контейнер */
+        svg {
+            width: 100%;
+            height: 100%;
+            filter: drop-shadow(0 0 20px rgba(244, 88, 126, 0.3));
+        }
+
+        /* Анимации */
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+
+        @keyframes glow {
+            0%, 100% { filter: drop-shadow(0 0 10px rgba(244, 88, 126, 0.3)); }
+            50% { filter: drop-shadow(0 0 30px rgba(244, 88, 126, 0.8)); }
+        }
+
+        .outer-circle {
+            animation: rotate 60s linear infinite reverse;
+        }
+
+        .inner-glow {
+            animation: glow 3s ease-in-out infinite;
+        }
+
+        .cat-eyes {
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        /* Текстовые стили */
+        .text-main {
+            fill: #f4587e;
+            font-family: 'Georgia', serif;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        .text-sub {
+            fill: #f4587e;
+            font-family: 'Georgia', serif;
+            font-size: 24px;
+            letter-spacing: 1px;
+        }
+
+        .circle-stroke {
+            stroke: #f4587e;
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .circle-thin {
+            stroke: #9d4edd;
+            fill: none;
+            stroke-width: 1;
+        }
+
+        .path-main {
+            stroke: #f4587e;
+            fill: #9d4edd;
+            opacity: 0.8;
+        }
+
+        .path-accent {
+            stroke: #f4587e;
+            fill: none;
+            stroke-width: 2;
+        }
+
+        /* Магические символы */
+        .symbol {
+            fill: #f4587e;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide">
+        <div class="background-pattern"></div>
+
+        <div class="emblem-container">
+            <svg viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <filter id="glow">
+                        <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                        <feMerge>
+                            <feMergeNode in="coloredBlur"/>
+                            <feMergeNode in="SourceGraphic"/>
+                        </feMerge>
+                    </filter>
+                    <pattern id="geometry" patternUnits="userSpaceOnUse" width="100" height="100">
+                        <line x1="0" y1="0" x2="100" y2="100" stroke="#f4587e" stroke-width="1" opacity="0.2"/>
+                        <line x1="100" y1="0" x2="0" y2="100" stroke="#f4587e" stroke-width="1" opacity="0.2"/>
+                    </pattern>
+                </defs>
+
+                <!-- Фоновая сетка -->
+                <rect width="1000" height="1000" fill="url(#geometry)"/>
+
+                <!-- Основной внешний круг -->
+                <circle cx="500" cy="500" r="480" class="circle-stroke outer-circle"/>
+                <circle cx="500" cy="500" r="460" class="circle-thin outer-circle"/>
+
+                <!-- Пентаграмма (внутренняя сетка) -->
+                <g id="pentagram" opacity="0.3">
+                    <!-- Линии сетки геометрии -->
+                    <line x1="500" y1="80" x2="500" y2="920" class="path-accent"/>
+                    <line x1="80" y1="500" x2="920" y2="500" class="path-accent"/>
+                    <!-- Диагонали -->
+                    <line x1="150" y1="150" x2="850" y2="850" class="path-accent"/>
+                    <line x1="850" y1="150" x2="150" y2="850" class="path-accent"/>
+                </g>
+
+                <!-- Внутренний круг кота -->
+                <circle cx="500" cy="500" r="300" class="circle-stroke inner-glow"/>
+
+                <!-- КОШКА - Магический кот сфинкс -->
+                <g id="cat" class="cat-eyes">
+                    <!-- Голова кота -->
+                    <ellipse cx="500" cy="420" rx="140" ry="160" fill="none" stroke="#9d4edd" stroke-width="8"/>
+
+                    <!-- Уши (остроконечные) -->
+                    <!-- Левое ухо -->
+                    <path d="M 390 280 L 340 140 L 380 250" fill="#9d4edd" stroke="#f4587e" stroke-width="3"/>
+                    <!-- Правое ухо -->
+                    <path d="M 610 280 L 660 140 L 620 250" fill="#9d4edd" stroke="#f4587e" stroke-width="3"/>
+
+                    <!-- Глаза (светящиеся) -->
+                    <circle cx="450" cy="380" r="35" fill="#f4587e" filter="url(#glow)"/>
+                    <circle cx="550" cy="380" r="35" fill="#f4587e" filter="url(#glow)"/>
+                    <!-- Зрачки -->
+                    <circle cx="450" cy="380" r="18" fill="#0c120e"/>
+                    <circle cx="550" cy="380" r="18" fill="#0c120e"/>
+                    <!-- Блики в глазах -->
+                    <circle cx="458" cy="372" r="8" fill="#ffffff" opacity="0.8"/>
+                    <circle cx="558" cy="372" r="8" fill="#ffffff" opacity="0.8"/>
+
+                    <!-- Нос -->
+                    <ellipse cx="500" cy="450" rx="20" ry="25" fill="#f4587e"/>
+
+                    <!-- Рот -->
+                    <path d="M 500 450 Q 480 480 450 475" fill="none" stroke="#f4587e" stroke-width="3" stroke-linecap="round"/>
+                    <path d="M 500 450 Q 520 480 550 475" fill="none" stroke="#f4587e" stroke-width="3" stroke-linecap="round"/>
+
+                    <!-- Усы -->
+                    <line x1="360" y1="410" x2="280" y2="400" stroke="#f4587e" stroke-width="3" stroke-linecap="round"/>
+                    <line x1="360" y1="430" x2="270" y2="435" stroke="#f4587e" stroke-width="3" stroke-linecap="round"/>
+                    <line x1="640" y1="410" x2="720" y2="400" stroke="#f4587e" stroke-width="3" stroke-linecap="round"/>
+                    <line x1="640" y1="430" x2="730" y2="435" stroke="#f4587e" stroke-width="3" stroke-linecap="round"/>
+
+                    <!-- Третий глаз / точка на лбу (мистическая) -->
+                    <circle cx="500" cy="320" r="15" fill="#f4587e" filter="url(#glow)"/>
+                    <circle cx="500" cy="320" r="8" fill="#0c120e"/>
+                </g>
+
+                <!-- Магические символы в углах -->
+                <!-- ⌛ Песочные часы (левый угол) -->
+                <g id="hourglass-left">
+                    <rect x="100" y="150" width="60" height="80" fill="none" stroke="#f4587e" stroke-width="3" class="symbol"/>
+                    <path d="M 110 160 L 150 200 L 110 240" fill="none" stroke="#f4587e" stroke-width="2"/>
+                    <path d="M 190 160 L 150 200 L 190 240" fill="none" stroke="#f4587e" stroke-width="2"/>
+                </g>
+
+                <!-- 🔮 Магическая руна (правый угол) -->
+                <g id="rune-right">
+                    <circle cx="850" cy="180" r="40" fill="none" stroke="#f4587e" stroke-width="2" class="symbol"/>
+                    <path d="M 850 140 L 850 220" stroke="#f4587e" stroke-width="2"/>
+                    <path d="M 810 180 L 890 180" stroke="#f4587e" stroke-width="2"/>
+                    <path d="M 825 160 L 875 200" stroke="#f4587e" stroke-width="2"/>
+                    <path d="M 875 160 L 825 200" stroke="#f4587e" stroke-width="2"/>
+                </g>
+
+                <!-- Основной текст - NORTHCAT (верхняя дуга) -->
+                <defs>
+                    <path id="topCurve" d="M 200 500 A 300 300 0 0 1 800 500" fill="none"/>
+                    <path id="bottomCurve" d="M 200 500 A 300 300 0 0 0 800 500" fill="none"/>
+                </defs>
+
+                <!-- NORTHCAT вверху -->
+                <text font-size="72" font-weight="bold" letter-spacing="8" class="text-main">
+                    <textPath href="#topCurve" startOffset="50%" text-anchor="middle">
+                        NORTHCAT
+                    </textPath>
+                </text>
+
+                <!-- СЕВЕРНЫЙ КОТ снизу (кириллица) -->
+                <text font-size="48" font-weight="bold" letter-spacing="4" class="text-main">
+                    <textPath href="#bottomCurve" startOffset="50%" text-anchor="middle">
+                        СЕВЕРНЫЙ КОТ
+                    </textPath>
+                </text>
+
+                <!-- Подтекст "Тату студия" -->
+                <text x="500" y="850" text-anchor="middle" class="text-sub">Тату студия</text>
+
+                <!-- Декоративный элемент - хвост кота внизу -->
+                <path d="M 600 600 Q 700 650 650 750" fill="none" stroke="#9d4edd" stroke-width="8" stroke-linecap="round" opacity="0.6"/>
+
+                <!-- Финальный внешний круг -->
+                <circle cx="500" cy="500" r="500" class="circle-stroke outer-circle"/>
+            </svg>
+        </div>
+    </div>
+
+    <script>
+        // Интерактивные эффекты
+        const emblem = document.querySelector('.emblem-container');
+
+        // Эффект при наведении мыши
+        emblem.addEventListener('mouseenter', function() {
+            const outerCircles = document.querySelectorAll('.outer-circle');
+            outerCircles.forEach(circle => {
+                circle.style.animationPlayState = 'running';
+            });
+        });
+
+        emblem.addEventListener('mouseleave', function() {
+            const outerCircles = document.querySelectorAll('.outer-circle');
+            outerCircles.forEach(circle => {
+                circle.style.animationPlayState = 'running';
+            });
+        });
+
+        // Свечение глаз при клике
+        emblem.addEventListener('click', function() {
+            const catEyes = document.querySelector('.cat-eyes');
+            catEyes.style.animation = 'none';
+            setTimeout(() => {
+                catEyes.style.animation = '';
+            }, 100);
+        });
+
+        console.log('NORTHCAT Emblem loaded - Магическая печать активирована ✨');
+    </script>
+</body>
+</html>
